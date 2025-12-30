@@ -1,45 +1,503 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <title>NewsWey</title>
-</head>
-<body>
-  <section style="max-width:1100px;margin:24px auto;padding:0 16px;">
-  <h2 style="margin:0 0 12px 0;">Derniers articles</h2>
-  <div id="news-list" style="display:grid;gap:12px;"></div>
-</section>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NewsWey — Cartographie des événements</title>
+  <meta name="description" content="WEY cartographie les événements du monde. Zéro jugement. Faits et sources." />
 
-<script>
-(async () => {
-  const box = document.getElementById('news-list');
-  box.innerHTML = 'Chargement…';
+  <style>
+    :root{
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --muted2:#64748b;
+      --border:#e2e8f0;
+      --shadow:0 10px 25px rgba(2,6,23,.08);
+      --brand:#f97316;  /* orange */
+      --brand2:#fb923c;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --danger:#dc2626;
+      --chip:#fff7ed;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .container{max-width:1180px;margin:0 auto;padding:0 18px}
 
-  try {
-    const r = await fetch('/api/home'); // renvoie un array d’articles
-    const items = await r.json();
-
-    if (!Array.isArray(items) || items.length === 0) {
-      box.innerHTML = 'Aucun article.';
-      return;
+    /* top bar */
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      background:rgba(247,248,251,.85);
+      backdrop-filter:saturate(180%) blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none;
+    }
+    .logo{
+      width:34px;height:34px;border-radius:10px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 10px 18px rgba(249,115,22,.25);
+    }
+    .brand-title{
+      display:flex; flex-direction:column; line-height:1.1;
+    }
+    .brand-title strong{font-size:16px}
+    .brand-title span{font-size:12px;color:var(--muted2)}
+    nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .navlink{
+      font-size:13px;text-decoration:none;color:var(--muted);
+      padding:8px 10px;border-radius:999px;
+    }
+    .navlink:hover{background:#ffffff;border:1px solid var(--border);padding:7px 9px}
+    .right{
+      display:flex; gap:10px; align-items:center;
+    }
+    .pill{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--muted);
     }
 
-    box.innerHTML = items.map(a => `
-      <a href="/article.html?id=${encodeURIComponent(a.id)}"
-         style="display:block;padding:14px;border:1px solid #334155;border-radius:10px;text-decoration:none;color:inherit;background:#111827;">
-        <div style="font-weight:700;margin-bottom:6px;">${escapeHtml(a.title || '')}</div>
-        <div style="opacity:.85">${escapeHtml(a.summary || '')}</div>
-        <div style="margin-top:8px;opacity:.6;font-size:12px;">${escapeHtml(a.created || '')}</div>
-      </a>
-    `).join('');
-  } catch (e) {
-    box.innerHTML = 'Erreur chargement.';
-  }
+    /* hero */
+    .hero{padding:26px 0 18px}
+    .hero-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      display:flex; gap:18px; align-items:flex-start; justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .hero-left{min-width:280px;flex:1}
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--chip);
+      border:1px solid #fed7aa;
+      color:#9a3412;
+      font-size:12px;
+      font-weight:700;
+    }
+    .hero h1{margin:10px 0 6px;font-size:28px;letter-spacing:-0.02em}
+    .hero p{margin:0;color:var(--muted);max-width:70ch}
+    .hero-right{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .btn{
+      text-decoration:none;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fff;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      border:0; color:white; font-weight:800;
+      box-shadow:0 14px 24px rgba(249,115,22,.25);
+    }
 
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-})();
-</script>
+    /* emergency banner */
+    .emergency{
+      margin:14px 0 0;
+      border-radius:16px;
+      border:1px solid #fecaca;
+      background:linear-gradient(180deg,#fff1f2,#ffffff);
+      padding:14px;
+      display:none;
+    }
+    .emergency.show{display:block}
+    .em-row{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+    .em-left{display:flex;gap:10px;align-items:flex-start}
+    .em-badge{
+      background:var(--danger);
+      color:white;
+      font-weight:900;
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .em-title{font-weight:900}
+    .em-desc{color:var(--muted);font-size:13px;margin-top:4px;max-width:90ch}
+    .em-link{font-size:13px;color:#9a3412;text-decoration:none;font-weight:800}
+    .em-link:hover{text-decoration:underline}
+
+    /* widgets */
+    .section{padding:16px 0}
+    .section-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .section-title{font-size:16px;font-weight:900}
+    .count{font-size:12px;color:var(--muted2);border:1px solid var(--border);background:#fff;padding:6px 10px;border-radius:999px}
+    .grid{display:grid;gap:12px}
+    .grid.widgets{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      box-shadow:0 8px 18px rgba(2,6,23,.05);
+    }
+    .widget-title{font-weight:900;display:flex;gap:8px;align-items:center}
+    .widget-value{margin-top:8px;color:var(--text);font-size:14px;font-weight:700}
+    .widget-sub{margin-top:6px;color:var(--muted2);font-size:12px}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.ok{background:var(--ok)}
+    .dot.warn{background:var(--warn)}
+    .dot.danger{background:var(--danger)}
+
+    /* feed cards */
+    .grid.feed{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .event-card{
+      text-decoration:none;
+      display:block;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fff;
+      box-shadow:0 10px 20px rgba(2,6,23,.06);
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .event-card:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(2,6,23,.10)}
+    .thumb{
+      position:relative;
+      height:160px;
+      background:#e2e8f0;
+    }
+    .thumb img{
+      width:100%;height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .overlay{
+      position:absolute; left:0; right:0; bottom:0;
+      padding:10px;
+      display:flex; justify-content:space-between; align-items:flex-end; gap:10px;
+      background:linear-gradient(180deg,rgba(2,6,23,0),rgba(2,6,23,.72));
+      color:#fff;
+    }
+    .chip{
+      display:inline-flex;align-items:center;
+      padding:6px 10px;border-radius:999px;
+      font-size:12px;font-weight:900;
+      background:rgba(249,115,22,.92);
+    }
+    .meta{
+      font-size:12px;opacity:.9;
+      white-space:nowrap;
+    }
+    .body{padding:12px 14px 14px}
+    .title{margin:0;font-size:15px;font-weight:900;line-height:1.25}
+    .summary{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
+
+    /* footer */
+    footer{padding:24px 0 36px;color:var(--muted2);font-size:12px}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <a class="brand" href="/">
+          <div class="logo"></div>
+          <div class="brand-title">
+            <strong>NewsWey</strong>
+            <span>Cartographie des événements du monde</span>
+          </div>
+        </a>
+
+        <nav>
+          <a class="navlink" href="#events">Événements</a>
+          <a class="navlink" href="#types">Types WEY</a>
+          <a class="navlink" href="#about">About</a>
+        </nav>
+
+        <div class="right">
+          <div class="pill" id="lastUpdate">Update: —</div>
+          <a class="btn btn-primary" href="#events">Live</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="kicker">WEY • ZÉRO JUGEMENT • SOURCES VISIBLES</div>
+          <h1>Observer le monde tel qu’il se déroule</h1>
+          <p>
+            WEY ne raconte pas l’actualité : WEY organise des <b>événements</b>.
+            Quand les sources divergent, nous ne tranchons pas : nous montrons.
+          </p>
+
+          <!-- Emergency banner (hidden until data) -->
+          <div class="emergency" id="emergencyBanner">
+            <div class="em-row">
+              <div class="em-left">
+                <div class="em-badge">URGENT</div>
+                <div>
+                  <div class="em-title" id="emTitle">—</div>
+                  <div class="em-desc" id="emDesc">—</div>
+                </div>
+              </div>
+              <a class="em-link" id="emLink" href="#" target="_blank" rel="noreferrer">Voir la source →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <a class="btn" href="/article.html?id=" onclick="return false;">📌 Événement (exemple)</a>
+          <a class="btn" href="#types">🧭 10 types WEY</a>
+          <a class="btn" href="#about">📜 Manifeste</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIDGETS -->
+  <div class="section" id="dash">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-title">Tableau rapide</div>
+        <div class="count">Live</div>
+      </div>
+
+      <div class="grid widgets">
+        <div class="card">
+          <div class="widget-title"><span class="dot ok"></span> 🌤 Météo</div>
+          <div class="widget-value" id="wx">—</div>
+          <div class="widget-sub" id="wxTime"></div>
+        </div>
+
+        <div class="card">
+          <div class="widget-title"><span class="dot ok"></span> 🚗 Trafic</div>
+          <div class="widget-value" id="tf">—</div>
+          <div class="widget-sub" id="tfTime"></div>
+        </div>
+
+        <div class="card">
+          <div class="widget-title"><span class="dot ok"></span> 📈 Marchés</div>
+          <div class="widget-value" id="mk">—</div>
+          <div class="widget-sub" id="mkTime"></div>
+        </div>
+
+        <div class="card">
+          <div class="widget-title"><span class="dot ok"></span> 💱 Change</div>
+          <div class="widget-value" id="fx">—</div>
+          <div class="widget-sub" id="fxTime"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEED -->
+  <div class="section" id="events">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-title">Événements — Live</div>
+        <div class="count"><span id="eventsCount">—</span> items</div>
+      </div>
+
+      <div class="grid feed" id="eventGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPES WEY (static, simple) -->
+  <div class="section" id="types">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-title">🧭 Les 10 types d’événements WEY</div>
+        <div class="count">Définition officielle</div>
+      </div>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+        <div class="card"><b>INSTANT</b><div class="muted" style="margin-top:6px;font-size:13px">Minutes → heures (accident, explosion, séisme isolé)</div></div>
+        <div class="card"><b>EVOLVING</b><div class="muted" style="margin-top:6px;font-size:13px">Heures → jours (manifestation, tempête, crise courte)</div></div>
+        <div class="card"><b>RECURRING</b><div class="muted" style="margin-top:6px;font-size:13px">Mois → années (conflits, crises longues)</div></div>
+        <div class="card"><b>INSTITUTIONAL</b><div class="muted" style="margin-top:6px;font-size:13px">Élections, sommets, votes, décisions officielles</div></div>
+        <div class="card"><b>ECONOMIC</b><div class="muted" style="margin-top:6px;font-size:13px">Banque centrale, faillite, krach, marchés</div></div>
+        <div class="card"><b>SCIENTIFIC</b><div class="muted" style="margin-top:6px;font-size:13px">Découverte, innovation, IA, diffusion progressive</div></div>
+        <div class="card"><b>SOCIETAL</b><div class="muted" style="margin-top:6px;font-size:13px">Mouvements sociaux, lois, débats de société</div></div>
+        <div class="card"><b>CULTURAL</b><div class="muted" style="margin-top:6px;font-size:13px">Festival, film, œuvre, réception publique</div></div>
+        <div class="card"><b>SPORT</b><div class="muted" style="margin-top:6px;font-size:13px">Match, saison, résultats, records</div></div>
+        <div class="card"><b>EMERGENCY</b><div class="muted" style="margin-top:6px;font-size:13px">Danger population, sources officielles uniquement</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="about">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-title">📜 About</div>
+        <div class="count">WEY</div>
+      </div>
+      <div class="card">
+        <b>WEY ne raconte pas l’actualité. WEY cartographie les événements du monde.</b>
+        <p class="muted" style="margin:10px 0 0;font-size:14px;line-height:1.6">
+          Zéro opinion. Zéro jugement. Nous distinguons fait / déclaration / interprétation (attribuée).
+          Quand c’est incertain, c’est indiqué. Quand les sources divergent, c’est visible.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      © NewsWey — WEY Core • <span id="footerTime">—</span>
+    </div>
+  </footer>
+
+  <script>
+    const DEFAULT_IMG = "https://images.unsplash.com/photo-1504711331083-9c895941bf81?w=1200&q=80";
+
+    function escapeHTML(str) {
+      return String(str ?? "")
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
+
+    function timeAgo(iso) {
+      if (!iso) return "";
+      const t = new Date(iso).getTime();
+      if (!Number.isFinite(t)) return "";
+      const mins = Math.floor((Date.now() - t) / 60000);
+      if (mins < 1) return "now";
+      if (mins < 60) return `${mins}m`;
+      const h = Math.floor(mins / 60);
+      if (h < 24) return `${h}h`;
+      const d = Math.floor(h / 24);
+      return `${d}d`;
+    }
+
+    function badgeLabel(type) {
+      const t = (type || "NEWS").toUpperCase();
+      const map = {
+        EMERGENCY:"URGENT",
+        ECONOMIC:"ECO",
+        SCIENTIFIC:"SCI",
+        INSTITUTIONAL:"INST",
+        SOCIETAL:"SOC",
+        CULTURAL:"CULT",
+        SPORT:"SPORT",
+        RECURRING:"LONG",
+        EVOLVING:"SUIVI",
+        INSTANT:"FLASH"
+      };
+      return map[t] || t;
+    }
+
+    function renderEvents(items) {
+      const grid = document.getElementById("eventGrid");
+      document.getElementById("eventsCount").textContent = items.length;
+
+      grid.innerHTML = items.map(x => {
+        const img = escapeHTML(x.image_url || x.image || DEFAULT_IMG);
+        const tag = badgeLabel(x.event_type);
+        const when = timeAgo(x.created || x.updated);
+        const sources = (x.raw_count ?? "").toString();
+        const sourcesText = sources ? `• ${sources} sources` : "";
+
+        return `
+          <a class="event-card" href="/article.html?id=${encodeURIComponent(x.id)}">
+            <div class="thumb">
+              <img src="${img}" alt="${escapeHTML(x.title)}" loading="lazy">
+              <div class="overlay">
+                <div class="chip">${escapeHTML(tag)}</div>
+                <div class="meta">${escapeHTML(when)} ${escapeHTML(sourcesText)}</div>
+              </div>
+            </div>
+            <div class="body">
+              <h3 class="title">${escapeHTML(x.title || "Sans titre")}</h3>
+              <p class="summary">${escapeHTML(x.summary || "")}</p>
+            </div>
+          </a>
+        `;
+      }).join("");
+    }
+
+    async function safeWidget(id, url) {
+      try {
+        const r = await fetch(url);
+        if (!r.ok) return;
+        const data = await r.json();
+        if (data?.text) document.getElementById(id).textContent = data.text;
+        if (data?.updated_at) {
+          const tId = id + "Time";
+          const el = document.getElementById(tId);
+          if (el) el.textContent = data.updated_at;
+        }
+      } catch {}
+    }
+
+    async function load() {
+      const now = new Date();
+      document.getElementById("lastUpdate").textContent = "Update: " + now.toLocaleTimeString();
+      document.getElementById("footerTime").textContent = now.toLocaleString();
+
+      // 1) Events (PocketBase via Pages Function)
+      const r = await fetch("/api/home");
+      const items = await r.json();
+      renderEvents(Array.isArray(items) ? items : []);
+
+      // 2) Emergency banner (optional endpoint later)
+      // expected JSON: { active:true, title:"...", summary:"...", source_url:"..." }
+      try {
+        const er = await fetch("/api/alert");
+        if (er.ok) {
+          const a = await er.json();
+          if (a && a.active) {
+            const b = document.getElementById("emergencyBanner");
+            b.classList.add("show");
+            document.getElementById("emTitle").textContent = a.title || "Alerte";
+            document.getElementById("emDesc").textContent = a.summary || "";
+            const link = document.getElementById("emLink");
+            link.href = a.source_url || "#";
+            link.style.display = a.source_url ? "inline-block" : "none";
+          }
+        }
+      } catch {}
+
+      // 3) Widgets (optional endpoints later)
+      // expected JSON: { text:"...", updated_at:"..." }
+      safeWidget("wx","/api/weather");
+      safeWidget("tf","/api/traffic");
+      safeWidget("mk","/api/markets");
+      safeWidget("fx","/api/fx");
+    }
+
+    load();
+  </script>
 </body>
 </html>
