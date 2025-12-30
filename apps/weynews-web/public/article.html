@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Article</title>
+</head>
+<body style="background:#0b1220;color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;">
+  <main style="max-width:900px;margin:24px auto;padding:0 16px;">
+    <a href="/" style="color:#93c5fd;text-decoration:none;">← Retour</a>
+    <h1 id="t" style="margin:14px 0 10px 0;"></h1>
+    <p id="s" style="opacity:.9;font-size:18px;line-height:1.5;"></p>
+    <div id="meta" style="opacity:.6;font-size:12px;margin:10px 0 18px 0;"></div>
+    <article id="b" style="line-height:1.7;"></article>
+  </main>
+
+<script>
+(async () => {
+  const id = new URLSearchParams(location.search).get('id');
+  if (!id) { document.body.innerHTML = 'Missing id'; return; }
+
+  const r = await fetch('/api/article?id=' + encodeURIComponent(id));
+  const a = await r.json();
+
+  document.title = a.title || 'Article';
+  document.getElementById('t').textContent = a.title || '';
+  document.getElementById('s').textContent = a.summary || '';
+  document.getElementById('meta').textContent = (a.created || '');
+
+  // body est un texte : on l’affiche en paragraphes
+  const body = (a.body || '').trim();
+  document.getElementById('b').innerHTML = body
+    ? body.split(/\n\s*\n/).map(p => `<p>${escapeHtml(p)}</p>`).join('')
+    : '<p>(Pas de contenu)</p>';
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+})();
+</script>
+</body>
+</html>
