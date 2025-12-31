@@ -1,6 +1,718 @@
-<!doctype html>
-<html>
-  <body>
-    <h1>Dashboard folder created</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>BIZZWEY Operations Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #1e293b;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #10b981;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .last-update {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .cards-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #334155;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .metric {
+            font-size: 36px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 8px;
+        }
+
+        .metric.warning {
+            color: #f59e0b;
+        }
+
+        .metric.danger {
+            color: #ef4444;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 20px;
+        }
+
+        .block {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #334155;
+        }
+
+        .block-icon {
+            font-size: 28px;
+        }
+
+        .block-title {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .health-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #0f172a;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .health-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .health-dot.warning { background: #f59e0b; }
+        .health-dot.danger { background: #ef4444; }
+
+        .health-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .health-time {
+            font-size: 12px;
+            color: #64748b;
+            margin-left: auto;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #0f172a;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            transition: width 0.3s ease;
+        }
+
+        .alert-box {
+            background: #7c2d12;
+            border: 1px solid #ea580c;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .alert-box.show {
+            display: block;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fed7aa;
+        }
+
+        .alert-message {
+            font-size: 14px;
+            color: #fdba74;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏢 BIZZWEY OPERATIONS DASHBOARD</h1>
+            <div class="header-info">
+                <div class="status-badge">
+                    <div class="status-dot"></div>
+                    <span>RUNNING</span>
+                </div>
+                <div class="last-update" id="lastUpdate">Last update: --:--:--</div>
+            </div>
+        </header>
+
+        <!-- HEALTH CARDS -->
+        <div class="cards-row">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🚨</span>
+                    <span class="card-title">HEALTH STATUS</span>
+                </div>
+                <div class="health-grid" id="healthGrid">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⏱</span>
+                    <span class="card-title">LATENCY</span>
+                </div>
+                <div class="metric" id="latencyMetric">--</div>
+                <div class="metric-label">Ingestion → Publication</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="latencyProgress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💰</span>
+                    <span class="card-title">COSTS TODAY</span>
+                </div>
+                <div class="metric" id="costMetric">$--</div>
+                <div class="metric-label"><span id="tokensMetric">--</span> tokens</div>
+            </div>
+        </div>
+
+        <!-- BLOC 1: INGESTION -->
+        <div class="block">
+            <div class="block-header">
+                <span class="block-icon">📥</span>
+                <span class="block-title">INGESTION (WF1)</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="itemsPerHour">--</div>
+                    <div class="stat-label">Items/heure</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="itemsToday">--</div>
+                    <div class="stat-label">Items aujourd'hui</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="activeSources">--</div>
+                    <div class="stat-label">Sources actives</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="lastBatch">--</div>
+                    <div class="stat-label">Dernier batch</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="ingestionChart"></canvas>
+            </div>
+            <div class="alert-box" id="ingestionAlert">
+                <div class="alert-title">⚠️ Alert</div>
+                <div class="alert-message">Aucun item ingéré depuis 30 minutes</div>
+            </div>
+        </div>
+
+        <!-- BLOC 2: SALLE DE RÉDACTION -->
+        <div class="block">
+            <div class="block-header">
+                <span class="block-icon">📋</span>
+                <span class="block-title">SALLE DE RÉDACTION (WF2)</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="acceptRate">--</div>
+                    <div class="stat-label">Taux d'acceptation</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="rejectRate">--</div>
+                    <div class="stat-label">Taux de rejet</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="urgentRate">--</div>
+                    <div class="stat-label">Articles urgents</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="spamDetected">--</div>
+                    <div class="stat-label">Spam détecté</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="triChart"></canvas>
+            </div>
+        </div>
+
+        <!-- BLOC 3: EVENT ENGINE -->
+        <div class="block">
+            <div class="block-header">
+                <span class="block-icon">🔄</span>
+                <span class="block-title">EVENT ENGINE (WF3)</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="eventsNew">--</div>
+                    <div class="stat-label">NEW</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="eventsActive">--</div>
+                    <div class="stat-label">ACTIVE</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="clusteringRate">--</div>
+                    <div class="stat-label">Clustering rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="totalObservations">--</div>
+                    <div class="stat-label">Observations</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="eventsChart"></canvas>
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="metric-row">
+                    <div class="metric-name">Events by Wey (today)</div>
+                    <div class="metric-value" id="eventsByWeyTotal">--</div>
+                </div>
+                <div id="eventsByWeyList"></div>
+            </div>
+        </div>
+
+        <!-- BLOC 4: IA CORRECTOR -->
+        <div class="block">
+            <div class="block-header">
+                <span class="block-icon">🤖</span>
+                <span class="block-title">IA CORRECTOR (WF4)</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="articlesGenerated">--</div>
+                    <div class="stat-label">Articles générés</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="neutralityRate">--</div>
+                    <div class="stat-label">Neutralité</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="avgTokens">--</div>
+                    <div class="stat-label">Avg tokens/article</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="iaProcessed">--</div>
+                    <div class="stat-label">En attente IA</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="iaChart"></canvas>
+            </div>
+        </div>
+
+        <!-- BLOC 5: PUBLICATION -->
+        <div class="block">
+            <div class="block-header">
+                <span class="block-icon">📰</span>
+                <span class="block-title">PUBLICATION (WF5)</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value" id="publishedToday">--</div>
+                    <div class="stat-label">Publiés aujourd'hui</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="newsWeyCount">--</div>
+                    <div class="stat-label">NewsWey</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="expatWeyCount">--</div>
+                    <div class="stat-label">ExpatWey</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="sportWeyCount">--</div>
+                    <div class="stat-label">SportWey</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="duplicatesCount">--</div>
+                    <div class="stat-label">Duplicates today</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="publicationChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ======================
+        // CONFIG
+        // ======================
+        const DASHBOARD_URL = '/api/dashboard';
+        const REFRESH_INTERVAL = 30000; // 30s
+
+        let charts = {};
+
+        // ======================
+        // HELPERS
+        // ======================
+        function setText(id, v) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = v;
+        }
+
+        function setMetricClass(id, cls) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('warning', 'danger');
+            if (cls) el.classList.add(cls);
+        }
+
+        // ======================
+        // CHARTS
+        // ======================
+        function initCharts() {
+            const chartConfig = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                }
+            };
+
+            charts.ingestion = new Chart(document.getElementById('ingestionChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: 'Items', data: [], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)', tension: 0.4 }] },
+                options: chartConfig
+            });
+
+            charts.tri = new Chart(document.getElementById('triChart'), {
+                type: 'doughnut',
+                data: { labels: ['Acceptés', 'Rejetés'], datasets: [{ data: [0, 0], backgroundColor: ['#10b981', '#ef4444'] }] },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { color: '#e2e8f0' } }
+                    }
+                }
+            });
+
+            charts.events = new Chart(document.getElementById('eventsChart'), {
+                type: 'bar',
+                data: { labels: ['NEW','ACTIVE','WATCH','DORMANT','ARCHIVED'], datasets: [{ label: 'Events', data: [0,0,0,0,0], backgroundColor: ['#3b82f6','#10b981','#f59e0b','#6b7280','#1e293b'] }] },
+                options: chartConfig
+            });
+
+            charts.ia = new Chart(document.getElementById('iaChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: 'Articles', data: [], borderColor: '#8b5cf6', backgroundColor: 'rgba(139, 92, 246, 0.1)', tension: 0.4 }] },
+                options: chartConfig
+            });
+
+            charts.publication = new Chart(document.getElementById('publicationChart'), {
+                type: 'line',
+                data: { labels: [], datasets: [{ label: 'Publiés', data: [], borderColor: '#06b6d4', backgroundColor: 'rgba(6, 182, 212, 0.1)', tension: 0.4 }] },
+                options: chartConfig
+            });
+        }
+
+        // ======================
+        // DASHBOARD UPDATE
+        // ======================
+        async function updateDashboard() {
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = `Last update: ${now.toLocaleTimeString()}`;
+
+            try {
+                const r = await fetch(DASHBOARD_URL);
+                const data = await r.json();
+                if (!r.ok) throw new Error(data?.error || "dashboard fetch failed");
+
+                // HEALTH
+                const healthGrid = document.getElementById('healthGrid');
+                healthGrid.innerHTML = '';
+                for (const wf of data.health || []) {
+                    const last = wf.last ? new Date(wf.last) : null;
+                    const minutesAgo = last ? Math.floor((Date.now() - last.getTime()) / 60000) : 9999;
+                    let status = '';
+                    if (minutesAgo > 30) status = 'danger';
+                    else if (minutesAgo > 10) status = 'warning';
+                    healthGrid.innerHTML += `
+                        <div class="health-item">
+                            <div class="health-dot ${status}"></div>
+                            <div class="health-label">${wf.name}</div>
+                            <div class="health-time">${minutesAgo}m</div>
+                        </div>
+                    `;
+
+                    // Ingestion alert
+                    if (wf.name === 'Ingestion') {
+                        const alert = document.getElementById('ingestionAlert');
+                        if (alert) alert.classList.toggle('show', minutesAgo > 30);
+                    }
+                }
+
+                // LATENCY + COST
+                if (data.latencyMin != null) {
+                    setText('latencyMetric', `${data.latencyMin} min`);
+                    const pct = Math.min(100, Math.round((data.latencyMin / 120) * 100));
+                    const bar = document.getElementById('latencyProgress');
+                    if (bar) bar.style.width = `${pct}%`;
+                    if (data.latencyMin > 60) setMetricClass('latencyMetric', 'danger');
+                    else if (data.latencyMin > 20) setMetricClass('latencyMetric', 'warning');
+                    else setMetricClass('latencyMetric', '');
+                }
+                setText('costMetric', `$${(data.costs?.costUsdToday ?? 0).toFixed(2)}`);
+                setText('tokensMetric', `${Math.round((data.costs?.tokensToday ?? 0)/1000)}K`);
+
+                // WF1 INGESTION
+                setText('itemsToday', (data.wf1?.itemsToday ?? 0).toLocaleString());
+                const hour = new Date().getHours() + 1;
+                setText('itemsPerHour', Math.floor((data.wf1?.itemsToday ?? 0) / Math.max(1, hour)));
+                setText('activeSources', (data.wf1?.activeSources ?? 0).toLocaleString());
+                if (data.wf1?.lastRawCreated) {
+                    const minutesAgo = Math.floor((Date.now() - new Date(data.wf1.lastRawCreated).getTime()) / 60000);
+                    setText('lastBatch', `${minutesAgo} min ago`);
+                }
+
+                // WF2 TRI
+                const total = Math.max(1, (data.wf2?.accepted ?? 0) + (data.wf2?.rejected ?? 0));
+                setText('acceptRate', `${Math.round(((data.wf2?.accepted ?? 0)/total)*100)}%`);
+                setText('rejectRate', `${Math.round(((data.wf2?.rejected ?? 0)/total)*100)}%`);
+                setText('urgentRate', `${Math.round(((data.wf2?.urgent ?? 0)/total)*100)}%`);
+                setText('spamDetected', (data.wf2?.spam ?? 0).toLocaleString());
+                charts.tri.data.datasets[0].data = [data.wf2?.accepted ?? 0, data.wf2?.rejected ?? 0];
+                charts.tri.update();
+
+                // WF3 EVENTS
+                const statuses = ['NEW','ACTIVE','WATCH','DORMANT','ARCHIVED'];
+                const counts = statuses.map(s => data.wf3?.statusCounts?.[s] ?? 0);
+                setText('eventsNew', counts[0].toLocaleString());
+                setText('eventsActive', counts[1].toLocaleString());
+                setText('totalObservations', (data.wf3?.obsSum ?? 0).toLocaleString());
+                
+                // Clustering rate placeholder
+                const clustered = counts.reduce((a,b)=>a+b,0);
+                setText('clusteringRate', clustered ? `${(data.wf3.obsSum / clustered).toFixed(1)}x` : '--');
+
+                charts.events.data.datasets[0].data = counts;
+                charts.events.update();
+
+                // Events by Wey
+                const map = data.wf3?.eventsByWey || {};
+                const totalEvents = Object.values(map).reduce((a,b)=>a+b,0);
+                setText('eventsByWeyTotal', totalEvents ? totalEvents.toLocaleString() : '--');
+                const list = document.getElementById('eventsByWeyList');
+                const keys = Object.keys(map).sort((a,b)=>map[b]-map[a]).slice(0, 8);
+                list.innerHTML = keys.length
+                    ? keys.map(k => `
+                        <div class="metric-row">
+                            <div class="metric-name">${k || 'UNKNOWN'}</div>
+                            <div class="metric-value">${map[k].toLocaleString()}</div>
+                        </div>
+                    `).join('')
+                    : `<div class="metric-row"><div class="metric-name">--</div><div class="metric-value">0</div></div>`;
+
+                // WF4 IA
+                setText('iaProcessed', (data.wf4?.iaPending ?? 0).toLocaleString());
+                setText('articlesGenerated', (data.wf4?.generatedToday ?? 0).toLocaleString());
+                setText('neutralityRate', data.wf4?.neutralityRate != null ? `${data.wf4.neutralityRate}%` : '--');
+                
+                // Avg tokens placeholder
+                const avgTokens = data.wf4?.generatedToday > 0 
+                    ? Math.round(data.costs.tokensToday / data.wf4.generatedToday)
+                    : 0;
+                setText('avgTokens', avgTokens ? avgTokens.toLocaleString() : '--');
+
+                // WF5 PUBLICATION
+                setText('publishedToday', (data.wf5?.publishedToday ?? 0).toLocaleString());
+                const byWey = data.wf5?.publishedByWey || {};
+                setText('newsWeyCount', (byWey.news || 0).toLocaleString());
+                setText('expatWeyCount', (byWey.expat || 0).toLocaleString());
+                setText('sportWeyCount', (byWey.sport || 0).toLocaleString());
+
+                // Duplicates
+                const dupCount = data.duplicates?.dup ?? 0;
+                setText('duplicatesCount', dupCount.toLocaleString());
+                if (dupCount > 0) {
+                    setMetricClass('duplicatesCount', 'danger');
+                } else {
+                    setMetricClass('duplicatesCount', '');
+                }
+
+            } catch (error) {
+                console.error('Dashboard update failed:', error);
+                // Show error in UI
+                const healthGrid = document.getElementById('healthGrid');
+                if (healthGrid) {
+                    healthGrid.innerHTML = `
+                        <div class="health-item">
+                            <div class="health-dot danger"></div>
+                            <div class="health-label">Error loading data</div>
+                            <div class="health-time">${error.message}</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ======================
+        // INIT
+        // ======================
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            updateDashboard();
+            setInterval(updateDashboard, REFRESH_INTERVAL);
+        });
+    </script>
+</body>
 </html>
