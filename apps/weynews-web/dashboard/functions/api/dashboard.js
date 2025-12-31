@@ -1,169 +1,284 @@
-// functions/api/dashboard.js
-export async function onRequestGet(context) {
-  const PB_URL = context.env.PB_URL;         // ex: https://api.newswey.com
-  const PB_TOKEN = context.env.PB_TOKEN;     // token read-only PocketBase
-  const BRAND_FIELD = context.env.BRAND_FIELD || "vertical";
-  const EVENT_BRAND_FIELD = context.env.EVENT_BRAND_FIELD || "vertical";
+// apps/weynews-web/dashboard/functions/api/dashboard.js
+// Cloudflare Pages Function: GET /api/dashboard
+// Aggregates PocketBase metrics for WF1→WF5 + per-vertical counts.
+// Robust auth handling: tries without auth first, retries with Bearer only if PB_TOKEN looks like a JWT.
 
-  const headers = {
-    "Authorization": `Bearer ${PB_TOKEN}`,
-    "Content-Type": "application/json",
-  };
+export async function onRequest(context) {
+  const { request, env } = context;
 
-  function pbDateTime(d) {
-    const pad = (n) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-  }
-
-  function todayRange() {
-    const s = new Date(); s.setHours(0, 0, 0, 0);
-    const e = new Date(); e.setHours(23, 59, 59, 999);
-    return { s: pbDateTime(s), e: pbDateTime(e) };
-  }
-
-  async function pbFetch(collection, qs) {
-    const url = `${PB_URL}/api/collections/${collection}/records?${qs}`;
-    const r = await fetch(url, { headers });
-    if (!r.ok) {
-      const t = await r.text().catch(() => "");
-      throw new Error(`PB ${collection} ${r.status} ${r.statusText} :: ${t.slice(0, 400)}`);
-    }
-    return r.json();
-  }
-
-  async function pbFirst(collection, sortField) {
-    return pbFetch(collection, `sort=-${sortField}&perPage=1`);
-  }
-
-  function groupCount(items, field) {
-    const map = {};
-    for (const it of items || []) {
-      const k = it?.[field] ?? "UNKNOWN";
-      map[k] = (map[k] || 0) + 1;
-    }
-    return map;
+  // CORS (optional, but handy if you ever call it from other origins)
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders(request),
+    });
   }
 
   try {
-    const { s, e } = todayRange();
-    const todayFilter = (field) => `filter=(${field}>="${s}" && ${field}<="${e}")`;
+    const PB_URL = (env.PB_URL || "").replace(/\/+$/, "");
+    const PB_TOKEN = env.PB_TOKEN || "";
+    const BRAND_FIELD = env.BRAND_FIELD || "vertical";
+    const EVENT_BRAND_FIELD = env.EVENT_BRAND_FIELD || "vertical";
+    const DUP_FIELD = env.DUP_FIELD || "source_url";
 
-    // --- HEALTH (dernier record par WF)
-    const workflows = [
-      { name: "Ingestion", collection: "news_raw", field: "created" },
-      { name: "Tri", collection: "directed_items", field: "sr_processed_at" },
-      { name: "Events", collection: "news_canonical", field: "event_updated_at" },
-      { name: "IA", collection: "publish_ready", field: "created" },
-      { name: "Publication", collection: "published_posts", field: "published_at" },
-    ];
-
-    const health = [];
-    for (const wf of workflows) {
-      const data = await pbFirst(wf.collection, wf.field);
-      const last = data?.items?.[0]?.[wf.field] || null;
-      health.push({ ...wf, last });
+    if (!PB_URL) {
+      return json(
+        { ok: false, error: "PB_URL missing in Pages env vars (Production/Preview scope?)" },
+        500,
+        request
+      );
     }
 
-    // --- WF1 ingestion today
-    const rawToday = await pbFetch("news_raw", `${todayFilter("created")}&perPage=500`);
-    const rawItems = rawToday.items || [];
-    const itemsToday = rawToday.totalItems ?? rawItems.length;
-    const activeSources = [...new Set(rawItems.map(x => x.source_name).filter(Boolean))].length;
-    const latestRaw = rawItems.reduce((a, b) => (new Date(a.created) > new Date(b.created) ? a : b), rawItems[0] || null);
+    // -------------------------
+    // Helper: PocketBase fetcher
+    // -------------------------
+    async function pbFetch(collection, query) {
+      const base = `${PB_URL}/api/collections/${collection}/records?${query}`;
 
-    // --- WF2 tri today
-    const diToday = await pbFetch("directed_items", `${todayFilter("sr_processed_at")}&perPage=500`);
-    const diItems = diToday.items || [];
-    const accepted = diItems.filter(x => x.sr_reject === false).length;
-    const rejected = diItems.filter(x => x.sr_reject === true).length;
-    const urgent = diItems.filter(x => x.sr_priority === "URGENT").length;
-    const spam = diItems.filter(x => x.spam_detected === true).length;
+      // 1) Try WITHOUT auth first (works if collection is public read)
+      let r = await fetch(base, { headers: { "Content-Type": "application/json" } });
 
-    // --- WF3 events
-    const canonical = await pbFetch("news_canonical", `perPage=500&sort=-event_updated_at`);
-    const canItems = canonical.items || [];
-    const statuses = ["NEW", "ACTIVE", "WATCH", "DORMANT", "ARCHIVED"];
-    const statusCounts = Object.fromEntries(statuses.map(s => [s, canItems.filter(x => x.event_status === s).length]));
+      // 2) If unauthorized AND we have a JWT token, retry with Bearer
+      if (r.status === 401 && PB_TOKEN && PB_TOKEN.includes(".")) {
+        r = await fetch(base, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${PB_TOKEN}`,
+          },
+        });
+      }
 
-    const obsSum = canItems.reduce((acc, x) => acc + (Number(x.raw_count) || 0), 0);
-
-    const todayEvents = await pbFetch("news_canonical", `${todayFilter("event_updated_at")}&perPage=500`);
-    const eventsByWey = groupCount(todayEvents.items || [], EVENT_BRAND_FIELD);
-
-    // --- WF4 IA
-    const ready = await pbFetch("publish_ready", `perPage=500&sort=-created`);
-    const readyItems = ready.items || [];
-    const iaPending = readyItems.filter(x => !x.ia_processed_at).length;
-
-    const readyToday = await pbFetch("publish_ready", `${todayFilter("created")}&perPage=500`);
-    const genCount = readyToday.totalItems ?? (readyToday.items?.length || 0);
-
-    const neutralOk = readyItems.filter(x => {
-      try { return JSON.parse(x.neutrality_check || "{}")?.is_neutral === true; }
-      catch { return false; }
-    }).length;
-
-    const tokensSum = (readyToday.items || []).reduce((a, x) => {
-      try { return a + (Number(JSON.parse(x.generation_audit || "{}")?.tokens) || 0); }
-      catch { return a; }
-    }, 0);
-
-    // --- WF5 publication today
-    const pubToday = await pbFetch("published_posts", `${todayFilter("published_at")}&perPage=500`);
-    const pubItems = pubToday.items || [];
-    const publishedToday = pubToday.totalItems ?? pubItems.length;
-    const publishedByWey = groupCount(pubItems, BRAND_FIELD);
-
-    // --- LATENCY (approx)
-    const lastRaw = await pbFirst("news_raw", "created");
-    const lastPub = await pbFirst("published_posts", "published_at");
-    let latencyMin = null;
-    if (lastRaw?.items?.length && lastPub?.items?.length) {
-      const a = new Date(lastRaw.items[0].created);
-      const b = new Date(lastPub.items[0].published_at);
-      latencyMin = Math.max(0, Math.round((b.getTime() - a.getTime()) / 60000));
+      if (!r.ok) {
+        const t = await r.text();
+        throw new Error(`PB ${collection} ${r.status} ${r.statusText} :: ${t.slice(0, 800)}`);
+      }
+      return r.json();
     }
 
-    // --- DUPLICATES
-    const dupField = context.env.DUP_FIELD || "source_url";
-    let duplicates = { field: dupField, total: 0, unique: 0, dup: 0 };
-    if (pubItems.length) {
-      const vals = pubItems.map(x => x?.[dupField]).filter(Boolean);
-      const uniq = new Set(vals);
-      duplicates = { field: dupField, total: vals.length, unique: uniq.size, dup: Math.max(0, vals.length - uniq.size) };
+    async function pbGetOne(collection, id) {
+      const url = `${PB_URL}/api/collections/${collection}/records/${encodeURIComponent(id)}`;
+
+      // Try without auth
+      let r = await fetch(url, { headers: { "Content-Type": "application/json" } });
+
+      // Retry with Bearer if looks like JWT
+      if (r.status === 401 && PB_TOKEN && PB_TOKEN.includes(".")) {
+        r = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${PB_TOKEN}`,
+          },
+        });
+      }
+
+      if (!r.ok) {
+        const t = await r.text();
+        throw new Error(`PB ${collection}/${id} ${r.status} ${r.statusText} :: ${t.slice(0, 800)}`);
+      }
+      return r.json();
     }
 
-    const payload = {
-      ts: new Date().toISOString(),
-      health,
-      latencyMin,
-      costs: {
-        tokensToday: tokensSum,
-        costUsdToday: Number((tokensSum * 0.000008).toFixed(4)),
-      },
-      wf1: { itemsToday, activeSources, lastRawCreated: latestRaw?.created || null },
-      wf2: { accepted, rejected, urgent, spam },
-      wf3: { statusCounts, obsSum, eventsByWey },
-      wf4: { generatedToday: genCount, neutralityRate: readyItems.length ? Math.round((neutralOk / readyItems.length) * 100) : null, iaPending },
-      wf5: { publishedToday, publishedByWey },
-      duplicates,
+    // -------------------------
+    // Utility helpers
+    // -------------------------
+    const now = new Date();
+    const utc0 = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0));
+    const isoDayStart = utc0.toISOString(); // YYYY-MM-DDT00:00:00.000Z
+
+    // PocketBase filter uses field names; we try to use created/updated when present.
+    const pbFilter = (s) => s.replaceAll('"', '\\"'); // minimal escaping for PB filter string
+
+    const qs = (obj) =>
+      Object.entries(obj)
+        .filter(([, v]) => v !== undefined && v !== null && v !== "")
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
+        .join("&");
+
+    // -------------------------
+    // Fetch last items (fast)
+    // -------------------------
+    // If one collection name differs in your PB, change it here.
+    const COL = {
+      news_raw: "news_raw",
+      directed_items: "directed_items",
+      publish_ready: "publish_ready",
+      published_posts: "published_posts",
     };
 
-    return new Response(JSON.stringify(payload), {
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "public, max-age=15",
-        "X-Robots-Tag": "noindex, nofollow"
+    // Minimal "last record" pulls
+    const [lastRaw, lastDirected, lastReady, lastPublished] = await Promise.all([
+      pbFetch(COL.news_raw, qs({ sort: "-created", perPage: 1 })),
+      pbFetch(COL.directed_items, qs({ sort: "-updated", perPage: 1 })),
+      pbFetch(COL.publish_ready, qs({ sort: "-updated", perPage: 1 })),
+      pbFetch(COL.published_posts, qs({ sort: "-created", perPage: 1 })),
+    ]);
+
+    // -------------------------
+    // Counts today (approx)
+    // -------------------------
+    // created >= today 00:00 UTC
+    // Note: if you want Dubai-day, we can change to +04:00 boundaries later.
+    const [rawToday, readyToday, publishedToday] = await Promise.all([
+      pbFetch(
+        COL.news_raw,
+        qs({
+          perPage: 1,
+          filter: pbFilter(`created >= "${isoDayStart}"`),
+        })
+      ),
+      pbFetch(
+        COL.publish_ready,
+        qs({
+          perPage: 1,
+          filter: pbFilter(`created >= "${isoDayStart}" && ready_to_publish = true`),
+        })
+      ),
+      pbFetch(
+        COL.published_posts,
+        qs({
+          perPage: 1,
+          filter: pbFilter(`created >= "${isoDayStart}"`),
+        })
+      ),
+    ]);
+
+    // -------------------------
+    // Breakdown by vertical (optional but useful)
+    // We do it on publish_ready because that's the content layer.
+    // -------------------------
+    const verticals = ["news", "expat", "dias", "sport", "business", "finance", "tech"];
+    const readyByVertical = {};
+
+    await Promise.all(
+      verticals.map(async (v) => {
+        try {
+          const r = await pbFetch(
+            COL.publish_ready,
+            qs({
+              perPage: 1,
+              filter: pbFilter(`created >= "${isoDayStart}" && ${BRAND_FIELD} = "${v}" && ready_to_publish = true`),
+            })
+          );
+          readyByVertical[v] = r?.totalItems ?? 0;
+        } catch {
+          // If field doesn't exist, don't kill dashboard
+          readyByVertical[v] = null;
+        }
+      })
+    );
+
+    // -------------------------
+    // Duplicate / loop detection (quick signals)
+    // Example: if same publish_ready_id shows multiple times in last 100 published_posts
+    // -------------------------
+    let loopSignals = { duplicatePublishReadyIdsInRecent: 0 };
+    try {
+      const recentPublished = await pbFetch(COL.published_posts, qs({ sort: "-created", perPage: 100 }));
+      const ids = (recentPublished.items || []).map((x) => x.publish_ready_id).filter(Boolean);
+      const seen = new Set();
+      let dup = 0;
+      for (const id of ids) {
+        if (seen.has(id)) dup++;
+        else seen.add(id);
+      }
+      loopSignals.duplicatePublishReadyIdsInRecent = dup;
+    } catch {
+      // ignore
+    }
+
+    // -------------------------
+    // Response JSON for frontend
+    // -------------------------
+    const payload = {
+      ok: true,
+      meta: {
+        generated_at: new Date().toISOString(),
+        day_start_utc: isoDayStart,
+        pb_url: PB_URL,
       },
-    });
+      env: {
+        BRAND_FIELD,
+        EVENT_BRAND_FIELD,
+        DUP_FIELD,
+        token_mode: PB_TOKEN
+          ? PB_TOKEN.includes(".")
+            ? "bearer-jwt"
+            : "no-bearer-nonjwt"
+          : "none",
+      },
+      wf: {
+        wf1_ingestion: {
+          total_items: lastRaw.totalItems ?? null,
+          last_item: (lastRaw.items && lastRaw.items[0]) ? pick(lastRaw.items[0], ["id", "created", "updated", "title", "source_domain", "provider", "language"]) : null,
+          today_count: rawToday.totalItems ?? null,
+        },
+        wf3_event_engine: {
+          // directed_items usually represents “post-routing” items
+          total_items: lastDirected.totalItems ?? null,
+          last_item: (lastDirected.items && lastDirected.items[0]) ? pick(lastDirected.items[0], ["id", "updated", "created", "event_id", "ee_processed", "directed", BRAND_FIELD, EVENT_BRAND_FIELD]) : null,
+        },
+        wf4_generation: {
+          total_items: lastReady.totalItems ?? null,
+          last_item: (lastReady.items && lastReady.items[0]) ? pick(lastReady.items[0], ["id", "updated", "created", "event_id", "title", "ready_to_publish", BRAND_FIELD]) : null,
+          today_ready_to_publish: readyToday.totalItems ?? null,
+          today_ready_by_vertical: readyByVertical,
+        },
+        wf5_publication: {
+          total_items: lastPublished.totalItems ?? null,
+          last_item: (lastPublished.items && lastPublished.items[0]) ? pick(lastPublished.items[0], ["id", "created", "updated", "platform", "publish_ready_id", "published_url", "published_at", "event_id"]) : null,
+          today_published: publishedToday.totalItems ?? null,
+        },
+      },
+      signals: loopSignals,
+    };
+
+    // Cache 15s at edge to reduce PB load
+    const headers = {
+      ...corsHeaders(request),
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "public, max-age=15",
+    };
+
+    return new Response(JSON.stringify(payload), { status: 200, headers });
   } catch (err) {
-    return new Response(JSON.stringify({ ok: false, error: String(err?.message || err) }), {
-      status: 500,
-      headers: { 
-        "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "no-store",
-        "X-Robots-Tag": "noindex, nofollow"
+    return json(
+      {
+        ok: false,
+        error: String(err?.message || err),
       },
-    });
+      500,
+      context.request
+    );
   }
+}
+
+// -------------------------
+// Helpers
+// -------------------------
+function pick(obj, keys) {
+  const out = {};
+  for (const k of keys) {
+    if (obj && Object.prototype.hasOwnProperty.call(obj, k)) out[k] = obj[k];
+  }
+  return out;
+}
+
+function json(body, status, request) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      ...corsHeaders(request),
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
+function corsHeaders(request) {
+  const origin = request?.headers?.get("Origin") || "*";
+  return {
+    "Access-Control-Allow-Origin": origin === "null" ? "*" : origin,
+    "Access-Control-Allow-Methods": "GET,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  };
 }
