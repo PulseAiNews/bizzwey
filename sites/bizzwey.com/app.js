@@ -126,7 +126,7 @@
     const column = index % 5;
     const row = Math.floor(index / 5);
     const spriteRow = next * 5 + row;
-    photo.style.backgroundImage = 'url("assets/bizzwey-portfolio-live-sprite-v1.jpg")';
+    photo.style.backgroundImage = 'url("assets/bizzwey-portfolio-live-sprite-v1.webp")';
     photo.style.backgroundSize = "500% 6000%";
     photo.style.backgroundPosition = `${(column / 4) * 100}% ${(spriteRow / 59) * 100}%`;
     card.append(photo);
