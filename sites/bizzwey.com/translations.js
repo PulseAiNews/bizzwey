@@ -464,3 +464,36 @@ window.BIZZWey_TRANSLATIONS = {
     closingEyebrow: "Наблюдать · Помнить · Понимать", backTop: "Вернуться к сигналу", footerLine: "Мир меняется. Мы сохраняем его понятным."
   }
 };
+
+/* The institutional layout has its own interface copy.  Keeping it here makes
+   every visible non-brand phrase follow the selected language. */
+(() => {
+  const ui = {
+    en: { navCompany: "Company", navBrands: "Brands", navWorld: "The world", globalLocal: "Global / local", alwaysContext: "Always in context", companyEyebrow: "BizzWey in one sentence" },
+    fr: { navCompany: "Entreprise", navBrands: "Marques", navWorld: "Le monde", globalLocal: "Global / local", alwaysContext: "Toujours en contexte", companyEyebrow: "BizzWey en une phrase" },
+    es: { navCompany: "Empresa", navBrands: "Marcas", navWorld: "El mundo", globalLocal: "Global / local", alwaysContext: "Siempre en contexto", companyEyebrow: "BizzWey en una frase" },
+    de: { navCompany: "Unternehmen", navBrands: "Marken", navWorld: "Die Welt", globalLocal: "Global / lokal", alwaysContext: "Immer im Kontext", companyEyebrow: "BizzWey in einem Satz" },
+    it: { navCompany: "Azienda", navBrands: "Marchi", navWorld: "Il mondo", globalLocal: "Globale / locale", alwaysContext: "Sempre nel contesto", companyEyebrow: "BizzWey in una frase" },
+    pt: { navCompany: "Empresa", navBrands: "Marcas", navWorld: "O mundo", globalLocal: "Global / local", alwaysContext: "Sempre em contexto", companyEyebrow: "BizzWey numa frase" },
+    nl: { navCompany: "Bedrijf", navBrands: "Merken", navWorld: "De wereld", globalLocal: "Wereldwijd / lokaal", alwaysContext: "Altijd in context", companyEyebrow: "BizzWey in één zin" },
+    pl: { navCompany: "Firma", navBrands: "Marki", navWorld: "Świat", globalLocal: "Globalnie / lokalnie", alwaysContext: "Zawsze w kontekście", companyEyebrow: "BizzWey w jednym zdaniu" },
+    tr: { navCompany: "Şirket", navBrands: "Markalar", navWorld: "Dünya", globalLocal: "Küresel / yerel", alwaysContext: "Her zaman bağlam içinde", companyEyebrow: "BizzWey tek cümlede" },
+    ar: { navCompany: "الشركة", navBrands: "العلامات", navWorld: "العالم", globalLocal: "عالمي / محلي", alwaysContext: "دائمًا في السياق", companyEyebrow: "BizzWey في جملة واحدة" },
+    zh: { navCompany: "公司", navBrands: "品牌", navWorld: "世界", globalLocal: "全球 / 本地", alwaysContext: "始终置于语境中", companyEyebrow: "一句话了解 BizzWey" },
+    ja: { navCompany: "会社", navBrands: "ブランド", navWorld: "世界", globalLocal: "グローバル / ローカル", alwaysContext: "常に文脈とともに", companyEyebrow: "一言で語る BizzWey" },
+    ko: { navCompany: "회사", navBrands: "브랜드", navWorld: "세계", globalLocal: "글로벌 / 로컬", alwaysContext: "항상 맥락과 함께", companyEyebrow: "한 문장으로 보는 BizzWey" },
+    hi: { navCompany: "कंपनी", navBrands: "ब्रांड", navWorld: "दुनिया", globalLocal: "वैश्विक / स्थानीय", alwaysContext: "हमेशा संदर्भ में", companyEyebrow: "एक वाक्य में BizzWey" },
+    id: { navCompany: "Perusahaan", navBrands: "Merek", navWorld: "Dunia", globalLocal: "Global / lokal", alwaysContext: "Selalu dalam konteks", companyEyebrow: "BizzWey dalam satu kalimat" },
+    ru: { navCompany: "Компания", navBrands: "Бренды", navWorld: "Мир", globalLocal: "Глобально / локально", alwaysContext: "Всегда в контексте", companyEyebrow: "BizzWey в одном предложении" }
+  };
+
+  Object.entries(window.BIZZWey_TRANSLATIONS).forEach(([locale, copy]) => {
+    Object.assign(copy, {
+      companyTitle: copy.heroLead,
+      companyBody: copy.ecosystemIntro,
+      observatoryEyebrow: copy.livingEyebrow,
+      brandsEyebrow: copy.ecosystemEyebrow,
+      brandsTitle: copy.ecosystemTitle
+    }, ui[locale]);
+  });
+})();
