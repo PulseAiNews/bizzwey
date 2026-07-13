@@ -45,11 +45,9 @@
   }
 
   function initialLanguage() {
-    let stored = "";
-    try { stored = localStorage.getItem("bizzwey-language") || ""; } catch (_) { /* no-op */ }
-    if (translations[stored]) return stored;
-    const browserLanguage = (navigator.language || "en").toLowerCase().split("-")[0];
-    return translations[browserLanguage] ? browserLanguage : "en";
+    // BizzWey always opens in English. The selector remains available for the
+    // current visit without allowing an earlier browser choice to override it.
+    return "en";
   }
 
   languageSelect?.addEventListener("change", (event) => translatePage(event.target.value));
@@ -83,6 +81,7 @@
   });
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.documentElement.classList.add("js-ready");
   const revealNodes = document.querySelectorAll(".reveal");
   if (reduceMotion || !("IntersectionObserver" in window)) {
     revealNodes.forEach((node) => node.classList.add("visible"));
@@ -110,6 +109,39 @@
     });
   }
 
-  const year = document.querySelector("#year");
-  if (year) year.textContent = String(new Date().getFullYear());
+  // Each portfolio card is a small living screen.  Its visual changes on its
+  // own cadence, so the page never becomes a synchronized flashing wall.
+  const portfolioCards = [...document.querySelectorAll(".all-brands > a")];
+  const portfolioVariants = 12;
+  function setPortfolioPhoto(card, cardNumber) {
+    const previous = Number(card.dataset.photoVariant ?? -1);
+    let next = Math.floor(Math.random() * portfolioVariants);
+    if (portfolioVariants > 1 && next === previous) next = (next + 1) % portfolioVariants;
+    card.dataset.photoVariant = String(next);
+
+    const photo = document.createElement("i");
+    photo.className = "brand-photo";
+    photo.setAttribute("aria-hidden", "true");
+    const index = cardNumber - 1;
+    const column = index % 5;
+    const row = Math.floor(index / 5);
+    const spriteRow = next * 5 + row;
+    photo.style.backgroundImage = 'url("assets/bizzwey-portfolio-live-sprite-v1.jpg")';
+    photo.style.backgroundSize = "500% 6000%";
+    photo.style.backgroundPosition = `${(column / 4) * 100}% ${(spriteRow / 59) * 100}%`;
+    card.append(photo);
+    requestAnimationFrame(() => photo.classList.add("is-visible"));
+    const previousPhoto = card.querySelector(".brand-photo.is-visible:not(:last-child)");
+    if (previousPhoto) {
+      previousPhoto.classList.remove("is-visible");
+      window.setTimeout(() => previousPhoto.remove(), 720);
+    }
+  }
+
+  portfolioCards.forEach((card, index) => {
+    const cardNumber = index + 1;
+    setPortfolioPhoto(card, cardNumber);
+    if (!reduceMotion) window.setInterval(() => setPortfolioPhoto(card, cardNumber), 3000 + (index % 5) * 120);
+  });
+
 })();
