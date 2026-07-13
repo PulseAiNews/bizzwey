@@ -110,3 +110,13 @@ h1,h2,h3,.stage-title,.company-statement h2,.hero h1 em,.hero-lead,.weymedia-cop
 .hero-link{margin-top:1.35rem!important}
 .hero .kicker{margin-bottom:.8rem!important}
 @media(max-width:760px){.hero,.hero-content{min-height:58svh!important}.hero-content{padding-top:5.3rem!important;padding-bottom:4.2rem!important}.hero::after{width:clamp(165px,38vw,250px)!important;right:4%!important;bottom:6%!important;top:auto!important}.hero h1{font-size:clamp(3.3rem,14vw,5.2rem)!important}}
+
+/* Compact first screen: remove the unused space above and below the Earth. */
+.hero,.hero-content{min-height:max(390px,35svh)!important}
+.hero-content{padding-top:2.25rem!important;padding-bottom:2.25rem!important}
+.hero h1{font-size:clamp(3.25rem,5.6vw,6.1rem)!important}
+.hero h1 em{margin-top:.38rem!important}
+.hero-lead{margin-top:.9rem!important}
+.hero-link{margin-top:1rem!important}
+.hero-meta{bottom:.8rem!important}
+@media(max-width:760px){.hero,.hero-content{min-height:58svh!important}.hero-content{padding-top:5rem!important;padding-bottom:3.5rem!important}}
