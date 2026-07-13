@@ -3,18 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#071216">
-    <meta
-      name="description"
-      content="BizzWey observes the living world, preserves its memory and makes it understandable."
-    >
+    <meta name="theme-color" content="#05080e">
+    <meta name="description" content="BizzWey observes the living world, preserves its memory and makes it understandable.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.bizzwey.com/">
     <meta property="og:title" content="BizzWey — The Observatory of the Living">
-    <meta
-      property="og:description"
-      content="BizzWey observes the living world, preserves its memory and makes it understandable."
-    >
+    <meta property="og:description" content="BizzWey observes the living world, preserves its memory and makes it understandable.">
     <meta property="og:image" content="https://www.bizzwey.com/og-bizzwey.svg">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="canonical" href="https://www.bizzwey.com/">
@@ -22,347 +16,86 @@
     <link rel="stylesheet" href="styles.css">
     <title>BizzWey — The Observatory of the Living</title>
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "BizzWey",
-        "url": "https://www.bizzwey.com/",
-        "slogan": "The Observatory of the Living",
-        "description": "BizzWey observes the living world, preserves its memory and makes it understandable."
-      }
+      {"@context":"https://schema.org","@type":"Organization","name":"BizzWey","url":"https://www.bizzwey.com/","slogan":"The Observatory of the Living","description":"BizzWey observes the living world, preserves its memory and makes it understandable."}
     </script>
   </head>
   <body>
     <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
-    <div class="page-noise" aria-hidden="true"></div>
-    <div class="ambient ambient-one" aria-hidden="true"></div>
-    <div class="ambient ambient-two" aria-hidden="true"></div>
-
     <header class="site-header" id="top">
-      <a class="brand" href="#top" aria-label="BizzWey home">
-        <span class="brand-mark" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </span>
-        <span class="brand-name">Bizz<span>Wey</span></span>
-      </a>
-
+      <a class="brand" href="#top" aria-label="BizzWey home"><span class="brand-dot"></span><span>BizzWey</span></a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#vision" data-i18n="navVision">Vision</a>
-        <a href="#living" data-i18n="navLiving">The living</a>
-        <a href="#weymedia">WeyMedia</a>
-        <a href="#ecosystem" data-i18n="navEcosystem">Ecosystem</a>
+        <a href="#company">Company</a><a href="#brands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world">The world</a>
       </nav>
-
       <div class="header-actions">
-        <label class="language-control">
-          <span class="sr-only" data-i18n="languageLabel">Choose a language</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="9"></circle>
-            <path d="M3 12h18M12 3c3 3.3 3 14.7 0 18M12 3c-3 3.3-3 14.7 0 18"></path>
-          </svg>
-          <select id="language-select" aria-label="Choose a language">
-            <option value="en">EN · English</option>
-            <option value="fr">FR · Français</option>
-            <option value="es">ES · Español</option>
-            <option value="de">DE · Deutsch</option>
-            <option value="it">IT · Italiano</option>
-            <option value="pt">PT · Português</option>
-            <option value="nl">NL · Nederlands</option>
-            <option value="pl">PL · Polski</option>
-            <option value="tr">TR · Türkçe</option>
-            <option value="ar">AR · العربية</option>
-            <option value="zh">ZH · 中文</option>
-            <option value="ja">JA · 日本語</option>
-            <option value="ko">KO · 한국어</option>
-            <option value="hi">HI · हिन्दी</option>
-            <option value="id">ID · Indonesia</option>
-            <option value="ru">RU · Русский</option>
-          </select>
+        <label class="language-control"><span class="sr-only" data-i18n="languageLabel">Choose a language</span>
+          <select id="language-select" aria-label="Choose a language"><option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option><option value="de">DE</option><option value="it">IT</option><option value="pt">PT</option><option value="nl">NL</option><option value="pl">PL</option><option value="tr">TR</option><option value="ar">AR</option><option value="zh">ZH</option><option value="ja">JA</option><option value="ko">KO</option><option value="hi">HI</option><option value="id">ID</option><option value="ru">RU</option></select>
         </label>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span><span></span>
-          <span class="sr-only" data-i18n="menu">Menu</span>
-        </button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span class="sr-only" data-i18n="menu">Menu</span></button>
       </div>
-
-      <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
-        <a href="#vision" data-i18n="navVision">Vision</a>
-        <a href="#living" data-i18n="navLiving">The living</a>
-        <a href="#weymedia">WeyMedia</a>
-        <a href="#ecosystem" data-i18n="navEcosystem">Ecosystem</a>
-      </nav>
+      <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="#company">Company</a><a href="#brands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world">The world</a></nav>
     </header>
 
     <main id="main">
-      <section class="hero section-shell" id="vision">
-        <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span><span data-i18n="heroEyebrow">A living intelligence ecosystem</span></p>
-          <h1>
-            <span>BizzWey</span>
-            <em data-i18n="heroTitle">The Observatory<br>of the Living</em>
-          </h1>
-          <p class="hero-lead" data-i18n="heroLead">
-            BizzWey observes the living world, preserves its memory and makes it understandable.
-          </p>
-          <p class="hero-support" data-i18n="heroSupport">
-            Signals become context. Context becomes knowledge. Knowledge returns to every Wey universe,
-            in everyone’s language.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#living">
-              <span data-i18n="explore">Explore the living system</span>
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-            </a>
-            <a class="text-link" href="#weymedia">
-              <span data-i18n="discoverMedia">Discover WeyMedia</span>
-              <span aria-hidden="true">↘</span>
-            </a>
-          </div>
+      <section class="hero" aria-label="BizzWey, The Observatory of the Living">
+        <div class="hero-film" aria-hidden="true"></div><div class="hero-vignette" aria-hidden="true"></div>
+        <div class="hero-content shell">
+          <p class="kicker"><span></span> An intelligence ecosystem in motion</p>
+          <h1><span>BizzWey</span><em data-i18n="heroTitle">The Observatory<br>of the Living</em></h1>
+          <p class="hero-lead" data-i18n="heroLead">BizzWey observes the living world, preserves its memory and makes it understandable.</p>
+          <a class="hero-link" href="#company"><span>Discover the company</span><b>↓</b></a>
         </div>
-
-        <div class="hero-visual reveal" role="img" aria-label="A living network connecting signals to BizzWey">
-          <div class="orbital-stage" id="orbital-stage">
-            <div class="orbit orbit-one"></div>
-            <div class="orbit orbit-two"></div>
-            <div class="orbit orbit-three"></div>
-            <svg class="signal-lines" viewBox="0 0 640 640" aria-hidden="true">
-              <defs>
-                <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#66f6d3" stop-opacity="0.8" />
-                  <stop offset="1" stop-color="#f2a66f" stop-opacity="0.14" />
-                </linearGradient>
-              </defs>
-              <g>
-                <path d="M320 320L116 172"></path><path d="M320 320L505 120"></path>
-                <path d="M320 320L555 350"></path><path d="M320 320L456 531"></path>
-                <path d="M320 320L185 535"></path><path d="M320 320L88 365"></path>
-              </g>
-            </svg>
-
-            <div class="core">
-              <span class="core-pulse"></span>
-              <span class="core-label">BizzWey</span>
-              <small data-i18n="coreLabel">Living memory</small>
-            </div>
-
-            <div class="signal signal-events"><span></span><b data-i18n="events">Events</b></div>
-            <div class="signal signal-knowledge"><span></span><b data-i18n="knowledge">Knowledge</b></div>
-            <div class="signal signal-markets"><span></span><b data-i18n="markets">Markets</b></div>
-            <div class="signal signal-tech"><span></span><b data-i18n="technology">Technology</b></div>
-            <div class="signal signal-people"><span></span><b data-i18n="people">People</b></div>
-            <div class="signal signal-passions"><span></span><b data-i18n="passions">Passions</b></div>
-
-            <div class="live-status">
-              <span class="status-dot"></span>
-              <span data-i18n="observing">Observing continuously</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-index" aria-hidden="true">01 — 08</div>
+        <div class="hero-meta shell"><span>Global / local</span><span>Always in context</span><span>© <span id="year"></span> BizzWey</span></div>
       </section>
 
-      <section class="principles section-shell reveal" aria-label="BizzWey principles">
-        <article>
-          <span>01</span>
-          <h2 data-i18n="principleObserve">Observe continuously</h2>
-          <p data-i18n="principleObserveText">Detect new signals as the world changes.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h2 data-i18n="principleRemember">Preserve context</h2>
-          <p data-i18n="principleRememberText">Connect the present to a reliable memory.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h2 data-i18n="principleUnderstand">Make it understandable</h2>
-          <p data-i18n="principleUnderstandText">Turn complexity into clear, useful knowledge.</p>
-        </article>
-      </section>
+      <section class="signal-ribbon" aria-label="What BizzWey observes"><div><span>Events</span><i>✦</i><span>Societies</span><i>✦</i><span>Markets</span><i>✦</i><span>Technology</span><i>✦</i><span>Passions</span><i>✦</i><span>People</span><i>✦</i><span>Knowledge</span></div></section>
 
-      <section class="living section-shell" id="living">
-        <div class="section-heading reveal">
-          <p class="eyebrow"><span></span><span data-i18n="livingEyebrow">Our field of observation</span></p>
-          <h2 data-i18n="livingTitle">The living is everything<br>that evolves.</h2>
-          <p data-i18n="livingIntro">
-            Nature is only the beginning. BizzWey follows the forces, ideas and communities that reshape
-            our world in real time.
-          </p>
-        </div>
-
-        <div class="living-grid reveal">
-          <article class="living-card card-events"><span>01</span><h3 data-i18n="events">Events</h3><i></i></article>
-          <article class="living-card"><span>02</span><h3 data-i18n="societies">Societies</h3><i></i></article>
-          <article class="living-card"><span>03</span><h3 data-i18n="companies">Companies</h3><i></i></article>
-          <article class="living-card"><span>04</span><h3 data-i18n="markets">Markets</h3><i></i></article>
-          <article class="living-card"><span>05</span><h3 data-i18n="technologies">Technologies</h3><i></i></article>
-          <article class="living-card"><span>06</span><h3 data-i18n="passions">Passions</h3><i></i></article>
-          <article class="living-card"><span>07</span><h3 data-i18n="people">People</h3><i></i></article>
-          <article class="living-card card-knowledge"><span>08</span><h3 data-i18n="knowledge">Knowledge</h3><i></i></article>
+      <section class="company shell" id="company">
+        <div class="company-marker reveal">01 / The company</div>
+        <div class="company-statement reveal">
+          <p class="kicker"><span></span> BizzWey in one sentence</p>
+          <h2>BizzWey watches the world change — then gives every community a way to understand it.</h2>
+          <p>We build living media and knowledge platforms. They collect what matters, keep its history close, and make it useful in the language of the person searching.</p>
         </div>
       </section>
 
-      <section class="engine">
-        <div class="engine-inner section-shell">
-          <div class="section-heading reveal">
-            <p class="eyebrow light"><span></span><span data-i18n="engineEyebrow">The absorption engine</span></p>
-            <h2 data-i18n="engineTitle">From signal<br>to meaning.</h2>
-          </div>
-
-          <div class="engine-flow reveal">
-            <article>
-              <span class="flow-number">01</span>
-              <div class="flow-icon"><i></i><i></i><i></i></div>
-              <h3 data-i18n="absorb">Absorb</h3>
-              <p data-i18n="absorbText">Continuously capture new signals from a changing world.</p>
-            </article>
-            <article>
-              <span class="flow-number">02</span>
-              <div class="flow-icon connect-icon"><i></i><i></i><i></i></div>
-              <h3 data-i18n="connect">Connect</h3>
-              <p data-i18n="connectText">Link each signal to history, sources and related events.</p>
-            </article>
-            <article>
-              <span class="flow-number">03</span>
-              <div class="flow-icon understand-icon"><i></i><i></i><i></i></div>
-              <h3 data-i18n="understand">Understand</h3>
-              <p data-i18n="understandText">Transform fragmented information into clear context.</p>
-            </article>
-            <article>
-              <span class="flow-number">04</span>
-              <div class="flow-icon distribute-icon"><i></i><i></i><i></i></div>
-              <h3 data-i18n="redistribute">Redistribute</h3>
-              <p data-i18n="redistributeText">Deliver useful knowledge to every Wey universe.</p>
-            </article>
-          </div>
+      <section class="observatory shell" id="world">
+        <div class="observatory-copy reveal"><p class="kicker"><span></span> The observatory</p><h2 data-i18n="livingTitle">The living is everything<br>that evolves.</h2></div>
+        <div class="observatory-grid reveal">
+          <article><b>01</b><h3 data-i18n="absorb">Absorb</h3><p data-i18n="absorbText">Continuously capture new signals from a changing world.</p></article>
+          <article><b>02</b><h3 data-i18n="connect">Connect</h3><p data-i18n="connectText">Link each signal to history, sources and related events.</p></article>
+          <article><b>03</b><h3 data-i18n="understand">Understand</h3><p data-i18n="understandText">Transform fragmented information into clear context.</p></article>
+          <article><b>04</b><h3 data-i18n="redistribute">Redistribute</h3><p data-i18n="redistributeText">Deliver useful knowledge to every Wey universe.</p></article>
         </div>
       </section>
 
-      <section class="weymedia section-shell" id="weymedia">
-        <div class="media-panel reveal">
-          <div class="media-copy">
-            <p class="eyebrow"><span></span><span>WeyMedia</span></p>
-            <h2 data-i18n="mediaTitle">Every passion deserves<br>a living library.</h2>
-            <blockquote data-i18n="mediaQuote">
-              Living, searchable libraries for every passion, in everyone’s language.
-            </blockquote>
-            <p data-i18n="mediaText">
-              Historical archives, current events, videos, sources and connected knowledge — gathered in
-              one place and made searchable through WeyQuery.
-            </p>
-          </div>
-          <div class="media-visual" aria-hidden="true">
-            <div class="library-card library-one"><span>ARCHIVE</span><i></i><i></i><i></i></div>
-            <div class="library-card library-two"><span>NOW</span><i></i><i></i><i></i></div>
-            <div class="library-card library-three"><span>QUERY</span><i></i><i></i><i></i></div>
-            <div class="query-pill"><span>Wey</span>Query <b>↗</b></div>
-          </div>
+      <section class="brand-stage" id="brands">
+        <div class="shell"><p class="kicker light"><span></span> Our brands &amp; platforms</p><h2 class="stage-title">Many worlds.<br><em>One living memory.</em></h2></div>
+        <div class="featured-brands shell reveal">
+          <a href="https://www.newswey.com" target="_blank" rel="noopener" class="brand-tile tile-news"><span>01</span><strong>NewsWey</strong><p>World events, connected and contextualized.</p><b>↗</b></a>
+          <a href="https://www.artwey.com" target="_blank" rel="noopener" class="brand-tile tile-art"><span>02</span><strong>ArtWey</strong><p>Culture, creators and their living memory.</p><b>↗</b></a>
+          <a href="https://www.stadwey.com" target="_blank" rel="noopener" class="brand-tile tile-stad"><span>03</span><strong>StadWey</strong><p>Places and the transformations that shape them.</p><b>↗</b></a>
+          <a href="https://www.expatwey.com" target="_blank" rel="noopener" class="brand-tile tile-expat"><span>04</span><strong>ExpatWey</strong><p>Intelligence for building a life across borders.</p><b>↗</b></a>
+        </div>
+        <div class="brand-rail"><span>LifeWey</span><span>PeopleWey</span><span>FinanceWey</span><span>InvestWey</span><span>DiasWey</span><span>TripWey</span><span>971 Expats</span><span>971 Wealth</span><span>971 Investment</span><span>971 Jobs</span><span>ByKema</span></div>
+        <div class="portfolio-list shell reveal">
+          <details><summary><span>WeyMedia worlds</span><b>11 platforms</b></summary><p><a href="https://www.bizzwey.com">BizzWey</a> · <a href="https://www.newswey.com">NewsWey</a> · <a href="https://www.artwey.com">ArtWey</a> · <a href="https://www.diaswey.com">DiasWey</a> · <a href="https://www.expatwey.com">ExpatWey</a> · <a href="https://www.financewey.com">FinanceWey</a> · <a href="https://www.investwey.com">InvestWey</a> · <a href="https://www.lifewey.com">LifeWey</a> · <a href="https://www.peoplewey.com">PeopleWey</a> · <a href="https://www.stadwey.com">StadWey</a> · <a href="https://www.tripwey.com">TripWey</a></p></details>
+          <details><summary><span>971 platforms</span><b>11 platforms</b></summary><p><a href="https://www.971carlease.com">Car Lease</a> · <a href="https://www.971container.com">Container</a> · <a href="https://www.971driver.com">Driver</a> · <a href="https://www.971expats.com">Expats</a> · <a href="https://www.971familyoffice.com">Family Office</a> · <a href="https://www.971financial.com">Financial</a> · <a href="https://www.971info.com">Info</a> · <a href="https://www.971information.com">Information</a> · <a href="https://www.971investment.com">Investment</a> · <a href="https://www.971jobs.com">Jobs</a> · <a href="https://www.971wealth.com">Wealth</a></p></details>
+          <details><summary><span>Independent platform</span><b>ByKema</b></summary><p><a href="https://www.bykema.com">ByKema</a> is a distinct BizzWey platform, built to grow with its own audience and purpose.</p></details>
         </div>
       </section>
 
-      <section class="ecosystem section-shell" id="ecosystem">
-        <div class="section-heading reveal">
-          <p class="eyebrow"><span></span><span data-i18n="ecosystemEyebrow">One intelligence, many universes</span></p>
-          <h2 data-i18n="ecosystemTitle">The Wey ecosystem.</h2>
-          <p data-i18n="ecosystemIntro">
-            Specialized worlds share the same living memory while respecting the language and culture of
-            every audience.
-          </p>
-        </div>
-
-        <div class="portfolio-intro reveal">
-          <span>23</span><p>Specialist platforms. One shared living memory.</p><i aria-hidden="true"></i>
-        </div>
-
-        <section class="portfolio-group reveal" aria-labelledby="wey-worlds">
-          <div class="portfolio-group-head">
-            <p>01 / Wey worlds</p><h3 id="wey-worlds">Editorial worlds, made specific.</h3>
-          </div>
-          <div class="portfolio-grid">
-            <a class="portfolio-card accent-mint" href="https://www.newswey.com" target="_blank" rel="noopener"><span class="portfolio-index">01</span><h4>NewsWey</h4><p>World events, connected to their history, context and consequences.</p><small>newswey.com</small></a>
-            <a class="portfolio-card" href="https://www.artwey.com" target="_blank" rel="noopener"><span class="portfolio-index">02</span><h4>ArtWey</h4><p>Art, creators, collections and the cultural memory they leave behind.</p><small>artwey.com</small></a>
-            <a class="portfolio-card" href="https://www.diaswey.com" target="_blank" rel="noopener"><span class="portfolio-index">03</span><h4>DiasWey</h4><p>Communities, diasporas and the conversations that move between worlds.</p><small>diaswey.com</small></a>
-            <a class="portfolio-card" href="https://www.expatwey.com" target="_blank" rel="noopener"><span class="portfolio-index">04</span><h4>ExpatWey</h4><p>Practical intelligence for people building a life across borders.</p><small>expatwey.com</small></a>
-            <a class="portfolio-card" href="https://www.financewey.com" target="_blank" rel="noopener"><span class="portfolio-index">05</span><h4>FinanceWey</h4><p>Financial signals translated into useful, connected perspective.</p><small>financewey.com</small></a>
-            <a class="portfolio-card" href="https://www.investwey.com" target="_blank" rel="noopener"><span class="portfolio-index">06</span><h4>InvestWey</h4><p>Investment knowledge that keeps evidence, time and context together.</p><small>investwey.com</small></a>
-            <a class="portfolio-card" href="https://www.lifewey.com" target="_blank" rel="noopener"><span class="portfolio-index">07</span><h4>LifeWey</h4><p>The ideas, practices and stories that shape how people live.</p><small>lifewey.com</small></a>
-            <a class="portfolio-card" href="https://www.peoplewey.com" target="_blank" rel="noopener"><span class="portfolio-index">08</span><h4>PeopleWey</h4><p>People, profiles and the public forces around their work.</p><small>peoplewey.com</small></a>
-            <a class="portfolio-card" href="https://www.stadwey.com" target="_blank" rel="noopener"><span class="portfolio-index">09</span><h4>StadWey</h4><p>Cities, places and the transformations that define them.</p><small>stadwey.com</small></a>
-            <a class="portfolio-card" href="https://www.tripwey.com" target="_blank" rel="noopener"><span class="portfolio-index">10</span><h4>TripWey</h4><p>Travel with the context that turns a destination into understanding.</p><small>tripwey.com</small></a>
-            <a class="portfolio-card" href="https://www.bizzwey.com" target="_blank" rel="noopener"><span class="portfolio-index">11</span><h4>BizzWey</h4><p>The institutional observatory that connects every Wey world.</p><small>bizzwey.com</small></a>
-          </div>
-        </section>
-
-        <section class="portfolio-group portfolio-group-dark reveal" aria-labelledby="platforms-971">
-          <div class="portfolio-group-head">
-            <p>02 / 971 platforms</p><h3 id="platforms-971">A practical intelligence layer for the UAE.</h3>
-          </div>
-          <div class="portfolio-grid">
-            <a class="portfolio-card" href="https://www.971carlease.com" target="_blank" rel="noopener"><span class="portfolio-index">12</span><h4>971 Car Lease</h4><p>Clear mobility intelligence for leasing and driving in the Emirates.</p><small>971carlease.com</small></a>
-            <a class="portfolio-card" href="https://www.971container.com" target="_blank" rel="noopener"><span class="portfolio-index">13</span><h4>971 Container</h4><p>Trade, freight and logistics signals in one operational view.</p><small>971container.com</small></a>
-            <a class="portfolio-card" href="https://www.971driver.com" target="_blank" rel="noopener"><span class="portfolio-index">14</span><h4>971 Driver</h4><p>Mobility services, local knowledge and the people who keep cities moving.</p><small>971driver.com</small></a>
-            <a class="portfolio-card" href="https://www.971expats.com" target="_blank" rel="noopener"><span class="portfolio-index">15</span><h4>971 Expats</h4><p>A living guide to settling, connecting and thriving in the UAE.</p><small>971expats.com</small></a>
-            <a class="portfolio-card" href="https://www.971familyoffice.com" target="_blank" rel="noopener"><span class="portfolio-index">16</span><h4>971 Family Office</h4><p>Long-term wealth context for families and their advisers.</p><small>971familyoffice.com</small></a>
-            <a class="portfolio-card" href="https://www.971financial.com" target="_blank" rel="noopener"><span class="portfolio-index">17</span><h4>971 Financial</h4><p>Financial information designed around the UAE’s real economy.</p><small>971financial.com</small></a>
-            <a class="portfolio-card" href="https://www.971info.com" target="_blank" rel="noopener"><span class="portfolio-index">18</span><h4>971 Info</h4><p>Useful, current information for everyday UAE decisions.</p><small>971info.com</small></a>
-            <a class="portfolio-card" href="https://www.971information.com" target="_blank" rel="noopener"><span class="portfolio-index">19</span><h4>971 Information</h4><p>A reference layer for understanding the UAE at a glance.</p><small>971information.com</small></a>
-            <a class="portfolio-card" href="https://www.971investment.com" target="_blank" rel="noopener"><span class="portfolio-index">20</span><h4>971 Investment</h4><p>Investment opportunities read through local knowledge and time.</p><small>971investment.com</small></a>
-            <a class="portfolio-card" href="https://www.971jobs.com" target="_blank" rel="noopener"><span class="portfolio-index">21</span><h4>971 Jobs</h4><p>Work, skills and opportunity across the Emirates.</p><small>971jobs.com</small></a>
-            <a class="portfolio-card" href="https://www.971wealth.com" target="_blank" rel="noopener"><span class="portfolio-index">22</span><h4>971 Wealth</h4><p>Wealth intelligence for a globally connected region.</p><small>971wealth.com</small></a>
-          </div>
-        </section>
-
-        <section class="portfolio-group reveal" aria-labelledby="independent-worlds">
-          <div class="portfolio-group-head">
-            <p>03 / Independent platform</p><h3 id="independent-worlds">Built with the same care for context.</h3>
-          </div>
-          <div class="portfolio-grid portfolio-grid-single">
-            <a class="portfolio-card accent-coral" href="https://www.bykema.com" target="_blank" rel="noopener"><span class="portfolio-index">23</span><h4>ByKema</h4><p>A distinct platform in the BizzWey portfolio, designed to grow with its own audience and purpose.</p><small>bykema.com</small></a>
-          </div>
-        </section>
+      <section class="weymedia shell" id="weymedia">
+        <div class="weymedia-image reveal"><div class="frame-label">WeyMedia / 01</div><div class="media-orb"><span>Wey<br>Media</span></div><div class="media-lines"></div></div>
+        <div class="weymedia-copy reveal"><p class="kicker"><span></span> WeyMedia</p><h2 data-i18n="mediaTitle">Every passion deserves<br>a living library.</h2><blockquote data-i18n="mediaQuote">Living, searchable libraries for every passion, in everyone’s language.</blockquote><p data-i18n="mediaText">Historical archives, current events, videos, sources and connected knowledge — gathered in one place and made searchable through WeyQuery.</p></div>
       </section>
 
-      <section class="languages section-shell reveal">
-        <div class="language-orbit" aria-hidden="true">
-          <span>EN</span><span>FR</span><span>ES</span><span>AR</span><span>日本語</span><span>NL</span>
-          <strong>15+</strong>
-        </div>
-        <div class="languages-copy">
-          <p class="eyebrow"><span></span><span data-i18n="languagesEyebrow">Knowledge without language borders</span></p>
-          <h2 data-i18n="languagesTitle">The world,<br>in your language.</h2>
-          <p data-i18n="languagesText">
-            BizzWey makes specialized knowledge accessible beyond the limits of dominant languages — so
-            every community can explore what it cares about naturally.
-          </p>
-        </div>
-      </section>
+      <section class="language-band"><div class="shell reveal"><p class="kicker"><span></span> Knowledge without language borders</p><h2>The world, in your language.</h2><p>English opens the door. Sixteen languages let every community enter naturally.</p><div class="languages-list"><span>English</span><span>Français</span><span>العربية</span><span>Español</span><span>中文</span><span>日本語</span><span>+10</span></div></div></section>
 
-      <section class="closing section-shell reveal">
-        <div class="closing-mark" aria-hidden="true"><span></span><span></span><span></span></div>
-        <p data-i18n="closingEyebrow">Observe · Remember · Understand</p>
-        <h2>BizzWey</h2>
-        <h3 data-i18n="heroTitlePlain">The Observatory of the Living</h3>
-        <a class="button button-primary" href="#top">
-          <span data-i18n="backTop">Back to the signal</span>
-          <span aria-hidden="true">↑</span>
-        </a>
-      </section>
+      <section class="closing"><div class="closing-film" aria-hidden="true"></div><div class="shell closing-content reveal"><p class="kicker light"><span></span> BizzWey</p><h2>The Observatory<br>of the Living.</h2><a href="#top">Back to the beginning <b>↑</b></a></div></section>
     </main>
-
-    <footer class="site-footer section-shell">
-      <a class="brand footer-brand" href="#top">
-        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span class="brand-name">Bizz<span>Wey</span></span>
-      </a>
-      <p data-i18n="footerLine">The world changes. We keep it understandable.</p>
-      <p>© <span id="year"></span> BizzWey</p>
-    </footer>
-
-    <noscript>
-      <p class="noscript">BizzWey requires JavaScript only for language switching and visual motion. The content remains accessible.</p>
-    </noscript>
-    <script src="translations.js" defer></script>
-    <script src="app.js" defer></script>
+    <footer class="site-footer shell"><a class="brand" href="#top"><span class="brand-dot"></span><span>BizzWey</span></a><p>The world changes. We keep it understandable.</p><p>© <span class="footer-year"></span> BizzWey</p></footer>
+    <noscript><p class="noscript">BizzWey requires JavaScript only for language switching and visual motion. The content remains accessible.</p></noscript>
+    <script src="translations.js" defer></script><script src="app.js" defer></script>
   </body>
 </html>
