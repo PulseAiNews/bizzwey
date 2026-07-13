@@ -98,3 +98,15 @@ h1,h2,h3,.stage-title,.company-statement h2,.hero h1 em,.hero-lead,.weymedia-cop
 .hero-lead{color:rgba(255,255,255,.92)!important}
 @keyframes earth-float-clean{from{transform:translateY(-50%) translate3d(0,3px,0)}to{transform:translateY(-50%) translate3d(0,-5px,0)}}
 @media(max-width:760px){.hero,.hero-content{min-height:62svh!important}.hero::after{top:auto!important;right:7%!important;bottom:7%!important;width:clamp(115px,29vw,180px)!important;transform:none!important}.hero-copy{max-width:100%!important}}
+
+/* Tighter hero composition: visible Earth, no empty vertical stage. */
+.hero,.hero-content{min-height:47svh!important}
+.hero-content{padding-top:3.5rem!important;padding-bottom:3.25rem!important}
+.hero-layout{align-items:center!important}
+.hero::after{width:clamp(200px,18vw,340px)!important;right:clamp(1.5rem,8vw,10rem)!important;top:54%!important}
+.hero h1{font-size:clamp(3.65rem,6.7vw,7.1rem)!important;line-height:.84!important}
+.hero h1 em{margin-top:.55rem!important;font-size:.52em!important;line-height:.96!important}
+.hero-lead{margin-top:1.35rem!important;font-size:clamp(1rem,1.25vw,1.3rem)!important;line-height:1.45!important}
+.hero-link{margin-top:1.35rem!important}
+.hero .kicker{margin-bottom:.8rem!important}
+@media(max-width:760px){.hero,.hero-content{min-height:58svh!important}.hero-content{padding-top:5.3rem!important;padding-bottom:4.2rem!important}.hero::after{width:clamp(165px,38vw,250px)!important;right:4%!important;bottom:6%!important;top:auto!important}.hero h1{font-size:clamp(3.3rem,14vw,5.2rem)!important}}
