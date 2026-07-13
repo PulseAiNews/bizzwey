@@ -114,4 +114,7 @@
 
   const year = document.querySelector("#year");
   if (year) year.textContent = String(new Date().getFullYear());
+  document.querySelectorAll(".footer-year").forEach((node) => {
+    node.textContent = String(new Date().getFullYear());
+  });
 })();
