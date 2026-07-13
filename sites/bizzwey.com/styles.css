@@ -120,3 +120,12 @@ h1,h2,h3,.stage-title,.company-statement h2,.hero h1 em,.hero-lead,.weymedia-cop
 .hero-link{margin-top:1rem!important}
 .hero-meta{bottom:.8rem!important}
 @media(max-width:760px){.hero,.hero-content{min-height:58svh!important}.hero-content{padding-top:5rem!important;padding-bottom:3.5rem!important}}
+
+/* Match the compact height of the following 01 / Company section on desktop. */
+@media(min-width:761px){
+  .hero{height:430px!important;min-height:430px!important}
+  .hero-content{height:430px!important;min-height:430px!important;padding-top:4.5rem!important;padding-bottom:2.3rem!important}
+  .hero::after{width:270px!important;top:54%!important}
+  .hero h1{font-size:clamp(3rem,4.7vw,5.4rem)!important}
+  .hero-meta{bottom:.7rem!important}
+}
