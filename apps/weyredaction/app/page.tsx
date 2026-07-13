@@ -35,10 +35,10 @@ const readers = [
 const newsReaders = [
   ["01", "Lecteur de périmètre", "Cet événement appartient-il réellement à NewsWey ?", "Nature du fait, thèmes, entités, zones touchées, portée et event_key déjà adapté.", "PASS_SCOPE · HOLD_SCOPE · BLOCK_SCOPE", "Le pays est une vue ; l’event_key reste l’unité centrale."],
   ["02", "Lecteur de preuve", "Que savons-nous réellement et avec quel niveau de certitude ?", "Sources, diversité, source officielle, contradictions, incertitudes, proof_status et liens visibles.", "PASS_PROOF · HOLD_PROOF · BLOCK_PROOF", "L’importance ne remplace jamais la preuve."],
-  ["03", "Lecteur d’importance", "Pourquoi cet événement compte-t-il maintenant ?", "Conséquences humaines, sécurité, portée, rupture, nouveauté, secteurs touchés et continuité.", "CRITICAL · HIGH · MEDIUM · LOW", "NewsWey hiérarchise impact, preuve et importance — pas la récence seule."],
+  ["03", "Lecteur d’importance", "Pourquoi cet événement compte-t-il maintenant ?", "Conséquences humaines, sécurité, portée, rupture, nouveauté, secteurs touchés et continuité.", "Verdict : PASS_IMPORTANCE · HOLD_IMPORTANCE · BLOCK_IMPORTANCE · Niveau : CRITICAL · HIGH · MEDIUM · LOW", "NewsWey hiérarchise impact, preuve et importance — pas la récence seule."],
   ["04", "Lecteur de contexte", "Peut-on expliquer proprement cet événement maintenant ?", "NOW, WHY NOW, WHY IT MATTERS, LAST TIME, TREND et sources vérifiables.", "PASS_CONTEXT · HOLD_CONTEXT · REVIEW_CONTEXT", "LAST TIME et TREND ne sont jamais inventés."],
   ["05", "Éditeur de sortie", "Quelle présentation sert le mieux le lecteur ?", "Format, profondeur, langue, média qualifié, vue globale/pays/verticale et durée de visibilité.", "RECOMMANDATION UNIQUEMENT", "Un event_key reçoit un emplacement principal ; la traduction vient après la valeur éditoriale."],
-  ["06", "Gate", "Le contrat newswey-v1 autorise-t-il cet événement à poursuivre son parcours ?", "Résultats des lecteurs, preuves utilisées, policy_version, raisons et statut d’exécution.", "PROPOSED → APPROVED_PUBLIC", "APPROVED_PUBLIC est verrouillé en observation ; aucun LLM ne l’accorde seul."]
+  ["06", "Gate", "Le contrat newswey-v1 autorise-t-il cet événement à poursuivre son parcours ?", "Résultats des lecteurs, preuves utilisées, policy_version, raisons et statut d’exécution.", "PROPOSED · HOLD_SCOPE · HOLD_PROOF · HOLD_IMPORTANCE · HOLD_CONTEXT · REVIEW_REQUIRED · APPROVED_PUBLIC · BLOCKED · ARCHIVED", "APPROVED_PUBLIC est verrouillé en observation ; aucun LLM ne l’accorde seul."]
 ] as const;
 
 const products = [
