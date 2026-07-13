@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">BizzWey — The Observatory of the Living</title>
+  <desc id="desc">A living network of signals around the BizzWey observatory.</desc>
+  <defs>
+    <radialGradient id="glow"><stop stop-color="#66f6d3" stop-opacity=".35"/><stop offset="1" stop-color="#66f6d3" stop-opacity="0"/></radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#66f6d3"/><stop offset="1" stop-color="#f2a66f"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#071216"/>
+  <circle cx="940" cy="315" r="280" fill="url(#glow)"/>
+  <g fill="none" stroke="#66f6d3" stroke-opacity=".23">
+    <circle cx="940" cy="315" r="210"/><circle cx="940" cy="315" r="145" stroke-dasharray="4 12"/><circle cx="940" cy="315" r="74"/>
+  </g>
+  <g stroke="url(#line)" stroke-opacity=".5">
+    <path d="M940 315L790 160"/><path d="M940 315l182-107"/><path d="M940 315l210 70"/><path d="M940 315L820 500"/>
+  </g>
+  <g fill="#f2a66f"><circle cx="790" cy="160" r="7"/><circle cx="1122" cy="208" r="7"/><circle cx="1150" cy="385" r="7"/><circle cx="820" cy="500" r="7"/></g>
+  <circle cx="940" cy="315" r="52" fill="#66f6d3"/><circle cx="940" cy="315" r="18" fill="#071216"/>
+  <text x="72" y="214" fill="#66f6d3" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="5">BIZZW EY / OBSERVATORY</text>
+  <text x="68" y="340" fill="#fffef9" font-family="Arial, sans-serif" font-size="102" font-weight="700" letter-spacing="-7">BizzWey</text>
+  <text x="73" y="405" fill="#fffef9" font-family="Georgia, serif" font-size="40">The Observatory of the Living</text>
+  <text x="75" y="486" fill="#9bb0b3" font-family="Arial, sans-serif" font-size="21">Observe · Remember · Understand</text>
+</svg>
