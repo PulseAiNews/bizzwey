@@ -72,3 +72,14 @@ h1,h2,h3,.stage-title,.company-statement h2,.hero h1 em,.hero-lead,.weymedia-cop
 .hero-vignette{background:linear-gradient(90deg,rgba(2,7,19,.96) 0%,rgba(2,7,19,.84) 31%,rgba(2,7,19,.34) 52%,rgba(2,7,19,.03) 72%,transparent 100%),linear-gradient(0deg,rgba(2,7,19,.34),transparent 42%)}
 @keyframes hero-space-float{from{transform:scale(1.008) translate3d(-.1%,.15%,0)}to{transform:scale(1.035) translate3d(.15%,-.25%,0)}}
 @media(max-width:760px){.hero-film{background-position:66% center!important;animation:hero-space-float 22s ease-in-out infinite alternate!important}}
+
+/* Final hero balance: readable editorial copy and a distant Earth. */
+.hero{background:#030714!important}
+.hero-film{background-color:#030714!important;background-size:auto 35%!important;background-position:88% 52%!important;background-repeat:no-repeat!important;transform-origin:88% 52%;animation:hero-earth-drift 24s ease-in-out infinite alternate!important}
+.hero-vignette{background:linear-gradient(90deg,#030714 0%,rgba(3,7,20,.98) 37%,rgba(3,7,20,.68) 55%,rgba(3,7,20,.12) 74%,transparent 100%)!important}
+.hero-copy,.hero-content{color:#fff!important}
+.hero h1,.hero h1>span,.hero h1 em,.hero-lead,.hero-link,.hero-meta{color:#fff!important;opacity:1!important;text-shadow:0 2px 18px rgba(0,0,0,.72)!important}
+.hero h1>span{-webkit-text-stroke:0!important}
+.hero-lead{max-width:34rem;background:linear-gradient(90deg,rgba(3,7,20,.72),transparent);padding:.55rem .8rem .55rem 0}
+@keyframes hero-earth-drift{from{transform:translate3d(-.2%,.3%,0)}to{transform:translate3d(.35%,-.4%,0)}}
+@media(max-width:760px){.hero-film{background-size:auto 31%!important;background-position:86% 72%!important}.hero-vignette{background:linear-gradient(90deg,rgba(3,7,20,.98),rgba(3,7,20,.63) 76%,transparent)!important}}
