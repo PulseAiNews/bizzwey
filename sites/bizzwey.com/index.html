@@ -25,7 +25,7 @@
     <header class="site-header" id="top">
       <a class="brand" href="#top" aria-label="BizzWey home"><img class="brand-logo" src="assets/bizzwey-logo-lockup-hq-v2.png" alt="BizzWey"></a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#company">Company</a><a href="#brands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world">The world</a>
+        <a href="#company" data-i18n="navCompany">Company</a><a href="#brands" data-i18n="navBrands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world" data-i18n="navWorld">The world</a>
       </nav>
       <div class="header-actions">
         <label class="language-control"><span class="sr-only" data-i18n="languageLabel">Choose a language</span>
@@ -33,34 +33,34 @@
         </label>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span class="sr-only" data-i18n="menu">Menu</span></button>
       </div>
-      <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="#company">Company</a><a href="#brands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world">The world</a></nav>
+      <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden><a href="#company" data-i18n="navCompany">Company</a><a href="#brands" data-i18n="navBrands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world" data-i18n="navWorld">The world</a></nav>
     </header>
 
     <main id="main">
       <section class="hero" aria-label="BizzWey, The Observatory of the Living">
         <div class="hero-film" aria-hidden="true"></div><div class="hero-vignette" aria-hidden="true"></div>
         <div class="hero-content shell">
-          <p class="kicker"><span></span> An intelligence ecosystem in motion</p>
+          <p class="kicker"><span></span> <span data-i18n="heroEyebrow">A living intelligence ecosystem</span></p>
           <h1><span>BizzWey</span><em data-i18n="heroTitle">The Observatory<br>of the Living</em></h1>
           <p class="hero-lead" data-i18n="heroLead">BizzWey observes the living world, preserves its memory and makes it understandable.</p>
-          <a class="hero-link" href="#company"><span>Discover the company</span><b>↓</b></a>
+          <a class="hero-link" href="#company"><span data-i18n="explore">Explore the living system</span><b>↓</b></a>
         </div>
-        <div class="hero-meta shell"><span>Global / local</span><span>Always in context</span><span>© 2025 BizzWey</span></div>
+        <div class="hero-meta shell"><span data-i18n="globalLocal">Global / local</span><span data-i18n="alwaysContext">Always in context</span><span>© 2025 BizzWey</span></div>
       </section>
 
-      <section class="signal-ribbon" aria-label="What BizzWey observes"><div><span>Events</span><i>✦</i><span>Societies</span><i>✦</i><span>Markets</span><i>✦</i><span>Technology</span><i>✦</i><span>Passions</span><i>✦</i><span>People</span><i>✦</i><span>Knowledge</span></div></section>
+      <section class="signal-ribbon" aria-label="What BizzWey observes"><div><span data-i18n="events">Events</span><i>✦</i><span data-i18n="societies">Societies</span><i>✦</i><span data-i18n="markets">Markets</span><i>✦</i><span data-i18n="technology">Technology</span><i>✦</i><span data-i18n="passions">Passions</span><i>✦</i><span data-i18n="people">People</span><i>✦</i><span data-i18n="knowledge">Knowledge</span></div></section>
 
       <section class="company shell" id="company">
-        <div class="company-marker reveal">01 / The company</div>
+        <div class="company-marker reveal">01 / <span data-i18n="navCompany">Company</span></div>
         <div class="company-statement reveal">
-          <p class="kicker"><span></span> BizzWey in one sentence</p>
-          <h2>BizzWey watches the world change — then gives every community a way to understand it.</h2>
-          <p>We build living media and knowledge platforms. They collect what matters, keep its history close, and make it useful in the language of the person searching.</p>
+          <p class="kicker"><span></span> <span data-i18n="companyEyebrow">BizzWey in one sentence</span></p>
+          <h2 data-i18n="companyTitle">BizzWey watches the world change — then gives every community a way to understand it.</h2>
+          <p data-i18n="companyBody">We build living media and knowledge platforms. They collect what matters, keep its history close, and make it useful in the language of the person searching.</p>
         </div>
       </section>
 
       <section class="observatory shell" id="world">
-        <div class="observatory-copy reveal"><p class="kicker"><span></span> The observatory</p><h2 data-i18n="livingTitle">The living is everything<br>that evolves.</h2></div>
+        <div class="observatory-copy reveal"><p class="kicker"><span></span> <span data-i18n="observatoryEyebrow">The observatory</span></p><h2 data-i18n="livingTitle">The living is everything<br>that evolves.</h2></div>
         <div class="observatory-grid reveal">
           <article><b>01</b><h3 data-i18n="absorb">Absorb</h3><p data-i18n="absorbText">Continuously capture new signals from a changing world.</p></article>
           <article><b>02</b><h3 data-i18n="connect">Connect</h3><p data-i18n="connectText">Link each signal to history, sources and related events.</p></article>
@@ -70,10 +70,31 @@
       </section>
 
       <section class="brand-stage" id="brands">
-        <div class="shell"><p class="kicker light"><span></span> Our brands &amp; platforms</p><h2 class="stage-title">Many worlds.<br><em>One living memory.</em></h2></div>
+        <div class="shell"><p class="kicker light"><span></span> <span data-i18n="brandsEyebrow">Our brands &amp; platforms</span></p><h2 class="stage-title" data-i18n="brandsTitle">Many worlds.<br><em>One living memory.</em></h2></div>
         <div class="all-brands shell reveal" role="group" aria-label="All BizzWey brands and platforms">
-          <a href="https://www.bizzwey.com"><span>01</span><strong>BizzWey</strong><small>bizzwey.com</small><b>↗</b></a><a href="https://www.newswey.com"><span>02</span><strong>NewsWey</strong><small>newswey.com</small><b>↗</b></a><a href="https://www.artwey.com"><span>03</span><strong>ArtWey</strong><small>artwey.com</small><b>↗</b></a><a href="https://www.diaswey.com"><span>04</span><strong>DiasWey</strong><small>diaswey.com</small><b>↗</b></a><a href="https://www.expatwey.com"><span>05</span><strong>ExpatWey</strong><small>expatwey.com</small><b>↗</b></a><a href="https://www.financewey.com"><span>06</span><strong>FinanceWey</strong><small>financewey.com</small><b>↗</b></a><a href="https://www.investwey.com"><span>07</span><strong>InvestWey</strong><small>investwey.com</small><b>↗</b></a><a href="https://www.lifewey.com"><span>08</span><strong>LifeWey</strong><small>lifewey.com</small><b>↗</b></a><a href="https://www.peoplewey.com"><span>09</span><strong>PeopleWey</strong><small>peoplewey.com</small><b>↗</b></a><a href="https://www.stadwey.com"><span>10</span><strong>StadWey</strong><small>stadwey.com</small><b>↗</b></a><a href="https://www.tripwey.com"><span>11</span><strong>TripWey</strong><small>tripwey.com</small><b>↗</b></a>
-          <a href="https://www.971carlease.com"><span>12</span><strong>971 Car Lease</strong><small>971carlease.com</small><b>↗</b></a><a href="https://www.971container.com"><span>13</span><strong>971 Container</strong><small>971container.com</small><b>↗</b></a><a href="https://www.971driver.com"><span>14</span><strong>971 Driver</strong><small>971driver.com</small><b>↗</b></a><a href="https://www.971expats.com"><span>15</span><strong>971 Expats</strong><small>971expats.com</small><b>↗</b></a><a href="https://www.971familyoffice.com"><span>16</span><strong>971 Family Office</strong><small>971familyoffice.com</small><b>↗</b></a><a href="https://www.971financial.com"><span>17</span><strong>971 Financial</strong><small>971financial.com</small><b>↗</b></a><a href="https://www.971info.com"><span>18</span><strong>971 Info</strong><small>971info.com</small><b>↗</b></a><a href="https://www.971information.com"><span>19</span><strong>971 Information</strong><small>971information.com</small><b>↗</b></a><a href="https://www.971investment.com"><span>20</span><strong>971 Investment</strong><small>971investment.com</small><b>↗</b></a><a href="https://www.971jobs.com"><span>21</span><strong>971 Jobs</strong><small>971jobs.com</small><b>↗</b></a><a href="https://www.971wealth.com"><span>22</span><strong>971 Wealth</strong><small>971wealth.com</small><b>↗</b></a><a href="https://www.bykema.com"><span>23</span><strong>ByKema</strong><small>bykema.com</small><b>↗</b></a>
+          <a style="--h:202" href="https://www.bizzwey.com"><span>01</span><i class="brand-visual" aria-hidden="true">BW</i><strong>BizzWey</strong><small>bizzwey.com</small><b>↗</b></a>
+          <a style="--h:218" href="https://www.newswey.com"><span>02</span><i class="brand-visual" aria-hidden="true">NW</i><strong>NewsWey</strong><small>newswey.com</small><b>↗</b></a>
+          <a style="--h:286" href="https://www.artwey.com"><span>03</span><i class="brand-visual" aria-hidden="true">AW</i><strong>ArtWey</strong><small>artwey.com</small><b>↗</b></a>
+          <a style="--h:332" href="https://www.diaswey.com"><span>04</span><i class="brand-visual" aria-hidden="true">DW</i><strong>DiasWey</strong><small>diaswey.com</small><b>↗</b></a>
+          <a style="--h:156" href="https://www.expatwey.com"><span>05</span><i class="brand-visual" aria-hidden="true">EW</i><strong>ExpatWey</strong><small>expatwey.com</small><b>↗</b></a>
+          <a style="--h:42" href="https://www.financewey.com"><span>06</span><i class="brand-visual" aria-hidden="true">FW</i><strong>FinanceWey</strong><small>financewey.com</small><b>↗</b></a>
+          <a style="--h:27" href="https://www.investwey.com"><span>07</span><i class="brand-visual" aria-hidden="true">IW</i><strong>InvestWey</strong><small>investwey.com</small><b>↗</b></a>
+          <a style="--h:110" href="https://www.lifewey.com"><span>08</span><i class="brand-visual" aria-hidden="true">LW</i><strong>LifeWey</strong><small>lifewey.com</small><b>↗</b></a>
+          <a style="--h:188" href="https://www.peoplewey.com"><span>09</span><i class="brand-visual" aria-hidden="true">PW</i><strong>PeopleWey</strong><small>peoplewey.com</small><b>↗</b></a>
+          <a style="--h:235" href="https://www.stadwey.com"><span>10</span><i class="brand-visual" aria-hidden="true">SW</i><strong>StadWey</strong><small>stadwey.com</small><b>↗</b></a>
+          <a style="--h:267" href="https://www.tripwey.com"><span>11</span><i class="brand-visual" aria-hidden="true">TW</i><strong>TripWey</strong><small>tripwey.com</small><b>↗</b></a>
+          <a style="--h:351" href="https://www.971carlease.com"><span>12</span><i class="brand-visual" aria-hidden="true">CL</i><strong>971 Car Lease</strong><small>971carlease.com</small><b>↗</b></a>
+          <a style="--h:48" href="https://www.971container.com"><span>13</span><i class="brand-visual" aria-hidden="true">CT</i><strong>971 Container</strong><small>971container.com</small><b>↗</b></a>
+          <a style="--h:15" href="https://www.971driver.com"><span>14</span><i class="brand-visual" aria-hidden="true">DR</i><strong>971 Driver</strong><small>971driver.com</small><b>↗</b></a>
+          <a style="--h:170" href="https://www.971expats.com"><span>15</span><i class="brand-visual" aria-hidden="true">EX</i><strong>971 Expats</strong><small>971expats.com</small><b>↗</b></a>
+          <a style="--h:38" href="https://www.971familyoffice.com"><span>16</span><i class="brand-visual" aria-hidden="true">FO</i><strong>971 Family Office</strong><small>971familyoffice.com</small><b>↗</b></a>
+          <a style="--h:80" href="https://www.971financial.com"><span>17</span><i class="brand-visual" aria-hidden="true">FI</i><strong>971 Financial</strong><small>971financial.com</small><b>↗</b></a>
+          <a style="--h:191" href="https://www.971info.com"><span>18</span><i class="brand-visual" aria-hidden="true">IN</i><strong>971 Info</strong><small>971info.com</small><b>↗</b></a>
+          <a style="--h:221" href="https://www.971information.com"><span>19</span><i class="brand-visual" aria-hidden="true">IF</i><strong>971 Information</strong><small>971information.com</small><b>↗</b></a>
+          <a style="--h:274" href="https://www.971investment.com"><span>20</span><i class="brand-visual" aria-hidden="true">IV</i><strong>971 Investment</strong><small>971investment.com</small><b>↗</b></a>
+          <a style="--h:128" href="https://www.971jobs.com"><span>21</span><i class="brand-visual" aria-hidden="true">JB</i><strong>971 Jobs</strong><small>971jobs.com</small><b>↗</b></a>
+          <a style="--h:318" href="https://www.971wealth.com"><span>22</span><i class="brand-visual" aria-hidden="true">WL</i><strong>971 Wealth</strong><small>971wealth.com</small><b>↗</b></a>
+          <a style="--h:247" href="https://www.bykema.com"><span>23</span><i class="brand-visual" aria-hidden="true">BK</i><strong>ByKema</strong><small>bykema.com</small><b>↗</b></a>
         </div>
       </section>
 
@@ -82,14 +103,14 @@
         <div class="weymedia-copy reveal"><p class="kicker"><span></span> WeyMedia</p><h2 data-i18n="mediaTitle">Every passion deserves<br>a living library.</h2><blockquote data-i18n="mediaQuote">Living, searchable libraries for every passion, in everyone’s language.</blockquote><p data-i18n="mediaText">Historical archives, current events, videos, sources and connected knowledge — gathered in one place and made searchable through WeyQuery.</p></div>
       </section>
 
-      <section class="language-band"><div class="shell reveal"><p class="kicker"><span></span> Knowledge without language borders</p><h2>The world, in your language.</h2><p>English opens the door. Sixteen languages let every community enter naturally.</p><div class="languages-list"><span>English</span><span>Français</span><span>العربية</span><span>Español</span><span>中文</span><span>日本語</span><span>+10</span></div></div></section>
+      <section class="language-band"><div class="shell reveal"><p class="kicker"><span></span> <span data-i18n="languagesEyebrow">Knowledge without language borders</span></p><h2 data-i18n="languagesTitle">The world,<br>in your language.</h2><p data-i18n="languagesText">BizzWey makes specialized knowledge accessible beyond dominant languages — so every community can naturally explore what it cares about.</p><div class="languages-list"><span>English</span><span>Français</span><span>العربية</span><span>Español</span><span>中文</span><span>日本語</span><span>+10</span></div></div></section>
 
-      <section class="closing"><div class="closing-film" aria-hidden="true"></div><div class="shell closing-content reveal"><p class="kicker light"><span></span> BizzWey</p><h2>The Observatory<br>of the Living.</h2><a href="#top">Back to the beginning <b>↑</b></a></div></section>
+      <section class="closing"><div class="closing-film" aria-hidden="true"></div><div class="shell closing-content reveal"><p class="kicker light"><span></span> BizzWey</p><h2 data-i18n="heroTitle">The Observatory<br>of the Living</h2><a href="#top"><span data-i18n="backTop">Back to the signal</span> <b>↑</b></a></div></section>
     </main>
     <footer class="site-footer">
       <div class="shell footer-inner">
         <a class="brand" href="#top" aria-label="BizzWey home"><img class="brand-logo" src="assets/bizzwey-logo-lockup-hq-v2.png" alt="BizzWey"></a>
-        <nav class="footer-nav" aria-label="Footer navigation"><a href="#company">Company</a><a href="#brands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world">The world</a></nav>
+        <nav class="footer-nav" aria-label="Footer navigation"><a href="#company" data-i18n="navCompany">Company</a><a href="#brands" data-i18n="navBrands">Brands</a><a href="#weymedia">WeyMedia</a><a href="#world" data-i18n="navWorld">The world</a></nav>
         <span class="footer-meta">© 2025 BizzWey</span>
       </div>
     </footer>
