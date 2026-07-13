@@ -48,8 +48,9 @@
     let stored = "";
     try { stored = localStorage.getItem("bizzwey-language") || ""; } catch (_) { /* no-op */ }
     if (translations[stored]) return stored;
-    const browserLanguage = (navigator.language || "en").toLowerCase().split("-")[0];
-    return translations[browserLanguage] ? browserLanguage : "en";
+    // BizzWey is presented in English by default. A visitor can deliberately
+    // choose another language, which is then remembered for future visits.
+    return "en";
   }
 
   languageSelect?.addEventListener("change", (event) => translatePage(event.target.value));
@@ -83,6 +84,7 @@
   });
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.documentElement.classList.add("js-ready");
   const revealNodes = document.querySelectorAll(".reveal");
   if (reduceMotion || !("IntersectionObserver" in window)) {
     revealNodes.forEach((node) => node.classList.add("visible"));
