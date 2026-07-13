@@ -45,11 +45,8 @@
   }
 
   function initialLanguage() {
-    let stored = "";
-    try { stored = localStorage.getItem("bizzwey-language") || ""; } catch (_) { /* no-op */ }
-    if (translations[stored]) return stored;
-    // BizzWey is presented in English by default. A visitor can deliberately
-    // choose another language, which is then remembered for future visits.
+    // BizzWey always opens in English. The selector remains available for the
+    // current visit without allowing an earlier browser choice to override it.
     return "en";
   }
 
@@ -112,9 +109,4 @@
     });
   }
 
-  const year = document.querySelector("#year");
-  if (year) year.textContent = String(new Date().getFullYear());
-  document.querySelectorAll(".footer-year").forEach((node) => {
-    node.textContent = String(new Date().getFullYear());
-  });
 })();
