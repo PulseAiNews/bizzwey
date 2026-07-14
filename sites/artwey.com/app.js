@@ -1,0 +1,1 @@
+document.querySelector('form')?.addEventListener('submit',event=>{event.preventDefault();const input=event.currentTarget.querySelector('input');if(input)input.placeholder='Merci — l’édition ArtWey arrive bientôt dans votre boîte mail.'});
