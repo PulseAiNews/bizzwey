@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="description" content="PeopleWey — showbiz, celebrities and entertainment from around the world.">
+  <title>PeopleWey — The world of people, live.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/peoplewey.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="masthead">
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+      <a class="brand" href="/" aria-label="PeopleWey home">PeopleWey<span>•</span></a>
+      <div class="mast-actions">
+        <button class="world-btn" data-open-world>WORLD <span>⌄</span></button>
+        <a class="search-btn" href="#search" aria-label="Search">⌕</a>
+      </div>
+    </div>
+    <nav class="primary-nav" id="primaryNav" aria-label="Main navigation">
+      <a class="active" href="#latest">Latest</a>
+      <a href="#celebrities">Celebrities</a>
+      <a href="#film-tv">Film & TV</a>
+      <a href="#music">Music</a>
+      <a href="#influencers">Influencers</a>
+      <a href="#royals">Royals</a>
+      <a href="#style">Style</a>
+      <a href="#world">World</a>
+      <a href="#photos">Photos</a>
+      <a href="#video">Video</a>
+    </nav>
+  </header>  <section class="world-strip">
+    <span class="live-dot"></span>
+    <strong>WORLD NOW</strong>
+    <div class="world-strip-links" id="worldStrip">
+      <button data-country="US">USA</button>
+      <button data-country="FR">France</button>
+      <button data-country="GB">UK</button>
+      <button data-country="MX">Mexico</button>
+      <button data-country="BR">Brazil</button>
+      <button data-country="IN">India</button>
+      <button data-country="KR">Korea</button>
+      <button data-country="JP">Japan</button>
+      <button data-country="NG">Nigeria</button>
+      <button data-country="AE">UAE</button>
+      <button data-open-world>All countries +</button>
+    </div>
+  </section>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="heroTitle">
+      <article class="hero-main">
+        <div class="art art-royals">
+          <span>ROYALS / TV</span>
+          <b>PW</b>
+        </div>
+        <div class="hero-copy">
+          <p class="kicker">GLOBAL • LIVE</p>
+          <h1 id="heroTitle">The world of people,<br><em>live.</em></h1>
+          <p class="dek">Celebrities, cinema, music, culture and public lives — followed across the world, source by source.</p>
+          <a class="read-link" href="#latest">See what’s happening now <span>→</span></a>
+        </div>
+      </article>
+
+      <div class="hero-side" id="heroSide"></div>
+    </section>
+
+    <section class="trending">
+      <div class="section-title compact">
+        <h2>Trending now</h2>
+        <span>LIVE SIGNALS</span>
+      </div>
+      <div class="trend-row" id="trendingRow"></div>
+    </section>    <section class="content-section" id="latest">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">PEOPLEWEY / NOW</p>
+          <h2>Latest stories.</h2>
+        </div>
+        <a href="#world">Explore the world <span>→</span></a>
+      </div>
+      <div class="latest-grid" id="latestGrid"></div>
+    </section>
+
+    <section class="world-feature" id="world">
+      <div class="world-feature-copy">
+        <p class="eyebrow light">PEOPLEWEY WORLD</p>
+        <h2>Showbiz has<br><em>no borders.</em></h2>
+        <p>From Seoul to Lagos, Paris to Mumbai, Mexico City to Dubai — follow entertainment through local sources, not one global lens.</p>
+        <button class="world-cta" data-open-world>Choose a country <span>↗</span></button>
+      </div>
+      <div class="world-map-card">
+        <div class="continent-labels" aria-hidden="true">
+          <span style="--x:14%;--y:39%">AMERICAS</span>
+          <span style="--x:47%;--y:28%">EUROPE</span>
+          <span style="--x:54%;--y:55%">AFRICA</span>
+          <span style="--x:74%;--y:37%">ASIA</span>
+          <span style="--x:84%;--y:70%">OCEANIA</span>
+        </div>
+        <div class="world-stat">
+          <strong>249</strong>
+          <span>markets in the PeopleWey world radar</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="celebrities">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">PEOPLE / PROFILES</p>
+          <h2>People to watch.</h2>
+        </div>
+        <a href="/people/">All people <span>→</span></a>
+      </div>
+      <div class="people-grid">
+        <article class="person-card"><div class="portrait p1">A</div><span>ACTORS</span><h3>Film & television</h3><p>Careers, projects and public appearances.</p></article>
+        <article class="person-card"><div class="portrait p2">M</div><span>MUSIC</span><h3>Artists</h3><p>Releases, tours, awards and culture.</p></article>
+        <article class="person-card"><div class="portrait p3">R</div><span>ROYALS</span><h3>Royal families</h3><p>Public engagements, society and style.</p></article>
+        <article class="person-card"><div class="portrait p4">I</div><span>INFLUENCE</span><h3>Creators</h3><p>Digital culture and global personalities.</p></article>
+      </div>
+    </section>    <section class="category-bands">
+      <a id="film-tv" href="#latest"><span>01</span><h3>Film & TV</h3><b>Stories, casts, premieres →</b></a>
+      <a id="music" href="#latest"><span>02</span><h3>Music</h3><b>Artists, releases, awards →</b></a>
+      <a id="influencers" href="#latest"><span>03</span><h3>Influencers</h3><b>Creators & digital culture →</b></a>
+      <a id="royals" href="#latest"><span>04</span><h3>Royals</h3><b>Royal families & society →</b></a>
+      <a id="style" href="#latest"><span>05</span><h3>Style</h3><b>Red carpet & fashion →</b></a>
+      <a id="video" href="#latest"><span>06</span><h3>Video</h3><b>Watch PeopleWey →</b></a>
+    </section>
+
+    <section class="search-panel" id="search">
+      <p class="eyebrow">FIND A PERSON / STORY / COUNTRY</p>
+      <form id="searchForm">
+        <input id="searchInput" type="search" placeholder="Search PeopleWey" autocomplete="off" aria-label="Search PeopleWey">
+        <button type="submit">Search →</button>
+      </form>
+      <div id="searchResults" class="search-results" aria-live="polite"></div>
+    </section>
+  </main>  <footer class="site-footer">
+    <div>
+      <a class="brand footer-brand" href="/">PeopleWey<span>•</span></a>
+      <h2>The world of people,<br><em>live.</em></h2>
+    </div>
+    <div class="footer-links">
+      <div><b>DISCOVER</b><a href="#latest">Latest</a><a href="#world">World</a><a href="#celebrities">Celebrities</a><a href="#music">Music</a></div>
+      <div><b>PEOPLEWEY</b><a href="/archive/">Archive</a><a href="/search/">Search</a><a href="mailto:info@bizzwey.com">Contact</a></div>
+    </div>
+    <p class="copyright">© 2026 PeopleWey · A BizzWey publication · Stories link back to original sources.</p>
+  </footer>
+
+  <dialog class="world-dialog" id="worldDialog">
+    <div class="dialog-head">
+      <div><p class="eyebrow">PEOPLEWEY WORLD</p><h2>Choose a market.</h2></div>
+      <button id="closeWorld" aria-label="Close">×</button>
+    </div>
+    <input id="countrySearch" type="search" placeholder="Search country or territory…" autocomplete="off">
+    <div class="country-grid" id="countryGrid"></div>
+  </dialog>
+
+  <script src="/peoplewey.js" defer></script>
+</body>
+</html>
